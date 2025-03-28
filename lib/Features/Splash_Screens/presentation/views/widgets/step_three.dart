@@ -15,19 +15,16 @@ class StepThree extends StatelessWidget {
       body: Stack(
         children: [
           // Background swirl patterns
-          Opacity(
-            opacity: .5,
-            child: Positioned(
+          Positioned(
 
-              top: 5,
-              left: 5,
-              child: Image.asset('images/1.png',
-                fit: BoxFit.cover,
-                width: 200,
-                height: 200,
+            top: 5,
+            left: 5,
+            child: Image.asset('images/1.png',
+              fit: BoxFit.cover,
+              width: 200,
+              height: 200,
 
 
-              ),
             ),
           ),
           Positioned(

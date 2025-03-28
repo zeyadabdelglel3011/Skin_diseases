@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "568214030239",
+    "project_id": "skin-diseases-93146",
+    "storage_bucket": "skin-diseases-93146.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:568214030239:android:9050d1ff5ff5bc8506dfaa",
+        "android_client_info": {
+          "package_name": "com.example.graduation_project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhkM9TrLeN-yYtkEbbEoq2Da4HgRB2cc8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

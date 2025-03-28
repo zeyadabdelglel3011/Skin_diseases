@@ -26,8 +26,8 @@ class _SplashScreenState extends State<SplashScreen> {
   _navigateToHome() async{
     await Future.delayed(const Duration(milliseconds: 4000),(){
       Get.to(()=> const SecondSplashScreen(),
-      transition: Transition.rightToLeftWithFade,
-       duration: const Duration(seconds: 2),
+      transition: Transition.cupertino,
+       duration: const Duration(seconds: 4),
       );
     });
 }
@@ -37,7 +37,7 @@ class _SplashScreenState extends State<SplashScreen> {
       backgroundColor: kbeigeColor ,
       body: Stack(
         children: [
-          // Background swirl patterns
+
           Positioned(
 
             top: 5,
@@ -64,27 +64,46 @@ class _SplashScreenState extends State<SplashScreen> {
           ),
 
           // Central logo
-          Center(
-            child: Container(
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.black,
-              ),
-              padding: const EdgeInsets.all(30),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Image.asset(
-                    "images/skin disease logo 2.png",
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Image.asset(
+                    "images/logooo.png",
                     fit: BoxFit.cover,
-                    height: 150,
-                    width: 200,
+                    height: 500,
+                    width: 500,
                   ),
-
-
-                ],
+                ),
               ),
-            ),
+
+             // RichText(
+             //     text: const TextSpan(
+             //       children: [
+             //         TextSpan(
+             //           text: "Skin",
+             //           style: TextStyle(
+             //             fontSize: 28,
+             //             fontWeight: FontWeight.bold,
+             //              color: Colors.black,
+             //           ),
+             //         ),
+             //
+             //         TextSpan(
+             //           text: " Wizard",
+             //           style: TextStyle(
+             //             color: kprimaryColor,
+             //             fontSize: 28,
+             //             fontWeight: FontWeight.bold,
+             //
+             //           ),
+             //         ),
+             //       ],
+             //     ),
+             // ),
+            ],
           ),
         ],
       ),

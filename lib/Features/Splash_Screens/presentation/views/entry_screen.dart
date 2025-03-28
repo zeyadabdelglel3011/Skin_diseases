@@ -43,35 +43,22 @@ class EntryScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Spacer(flex: 3,),
-                Container(
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.black,
-                  ),
-                  padding: const EdgeInsets.all(30),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                 //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Image.asset(
-                        "images/skin disease logo 2.png",
-                        fit: BoxFit.cover,
-                        height: 150,
-                        width: 200,
-                      ),
-
-
-
-                    ],
+                const Spacer(flex: 3,),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Image.asset(
+                    "images/logooo.png",
+                    fit: BoxFit.cover,
+                    height: 400,
+                    width: 400,
                   ),
                 ),
-                Spacer(flex: 1,),
+                const Spacer(flex: 1,),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20 , ),
                   child: GestureDetector(
                     onTap: (){
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=> const CreateAccountPatient()),);
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>  CreateAccountPatient()),);
                     },
                     child: Container(
                       width: double.infinity,
@@ -115,7 +102,7 @@ class EntryScreen extends StatelessWidget {
                        ),
 
                       ),
-                      child: Center(
+                      child: const Center(
                         child: Text(
                           'Doctor',
                           style: TextStyle(

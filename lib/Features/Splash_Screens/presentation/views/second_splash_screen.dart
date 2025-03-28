@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:graduation_project/Features/Splash_Screens/presentation/views/entry_screen.dart';
-import 'package:graduation_project/Features/Splash_Screens/presentation/views/widgets/step_one.dart';
+import 'package:graduation_project/Features/Splash_Screens/presentation/views/widgets/on_boarding_screens.dart';
+
 
 import '../../../../constants.dart';
 
@@ -80,32 +81,21 @@ class _SecondSplashScreenState extends State<SecondSplashScreen> with SingleTick
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Spacer(flex: 3,),
-                Container(
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.black,
-                  ),
-                  padding: const EdgeInsets.all(30),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Image.asset(
-                        "images/skin disease logo 2.png",
-                        fit: BoxFit.cover,
-                        height: 150,
-                        width: 200,
-                      ),
 
-
-
-                    ],
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Image.asset(
+                    "images/logooo.png",
+                    fit: BoxFit.cover,
+                    height: 400,
+                    width: 400,
                   ),
                 ),
                 const SizedBox(height: 20,),
                 SlideTransition(
                   position: slidingAnimation,
                   child: const Text(
-                    "Welcome !",
+                    "Welcome!",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 30,
@@ -115,7 +105,8 @@ class _SecondSplashScreenState extends State<SecondSplashScreen> with SingleTick
                 ),
                 const SizedBox(height: 10,),
                 SlideTransition(
-                  position: slidingAnimation,
+
+                  position:  slidingAnimation,
                   child: const Text(
                     textAlign:TextAlign.center,
                    "Skin diseases encompass a wide range of \n conditions that affect the skin, ranging from mild \n to severe",
@@ -162,7 +153,7 @@ class _SecondSplashScreenState extends State<SecondSplashScreen> with SingleTick
   }
   _navigateBetweenScreens() async{
     await Future.delayed(const Duration(seconds: 1),);
-    Get.to(()=> const StepOne(),
+    Get.to(()=> const OnBoardingScreens(),
     transition: Transition.rightToLeftWithFade,
       duration: const Duration(seconds: 1),
     );
