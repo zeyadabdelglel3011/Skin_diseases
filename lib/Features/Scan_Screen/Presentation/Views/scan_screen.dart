@@ -46,17 +46,16 @@ class _ScanScreenState extends State<ScanScreen> {
     return Scaffold(
       backgroundColor: kbeigeColor,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: kbeigeColor,
-        title: const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 120),
-          child: Text(
-            "Scan",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 26,
-            ),
-
+        centerTitle: true,
+        title: Text(
+          "Scan",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 26,
           ),
+
         ),
       ),
       body: SingleChildScrollView(

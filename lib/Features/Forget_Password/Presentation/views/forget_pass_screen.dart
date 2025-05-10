@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../constants.dart';
 
+
 class ForgetPassScreen extends StatelessWidget {
   const ForgetPassScreen({super.key});
 
@@ -151,16 +152,21 @@ class ForgetPassScreen extends StatelessWidget {
 
 
                             const SizedBox(height: 60,),
-                            Container(
-                              height: 55,
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                color: kprimaryColor,
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: const Center(
-                                child: Text("Reset Password",style: TextStyle(color: Colors.white,
-                                    fontSize: 22),),
+                            GestureDetector(
+                              onTap: (){
+                               // Navigator.push(context, MaterialPageRoute(builder: (context)=> ResetPasswordCodeScreen()));
+                              },
+                              child: Container(
+                                height: 55,
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  color: kprimaryColor,
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: const Center(
+                                  child: Text("Reset Password",style: TextStyle(color: Colors.white,
+                                      fontSize: 22),),
+                                ),
                               ),
                             ),
 

@@ -1,19 +1,29 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:graduation_project/Core/Utilities/widgets/custom_text_field.dart';
+import 'package:graduation_project/Features/Home_screen/Presentation/Views/home_screen.dart';
 import 'package:graduation_project/constants.dart';
 import 'package:graduation_project/Features/Create_Account_Doctor/presentation/views/create_account_doctor.dart';
 import 'package:graduation_project/Features/Login/presentation/views/login_screen.dart';
+import 'package:graduation_project/nav_bar.dart';
 
 import '../../../../Core/Utilities/widgets/create_account_doctor _button.dart';
+import '../../data/patient_auth_service.dart';
 
 class CreateAccountPatient extends StatelessWidget {
    CreateAccountPatient({super.key});
 
-  String? email;
-  String? password;
 
-  @override
+
+   String? email;
+   String? password;
+   String? firstName;
+   String? lastName;
+   String? confirmPassword;
+
+
+
+   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kbeigeColor,
@@ -145,12 +155,14 @@ class CreateAccountPatient extends StatelessWidget {
                               children: [
                                 Expanded(child:CustomTextField(
                                   hintText: "First Name",
+                                  onChanged: (value) => firstName = value,
                                 ) ,
 
                                 ),
                                 const SizedBox(width: 20,),
                                 Expanded(child:CustomTextField(
                                   hintText: "Last Name",
+                                  onChanged: (value) => lastName = value,
                                 ) ,
 
                                 ),
@@ -161,51 +173,53 @@ class CreateAccountPatient extends StatelessWidget {
                             CustomTextField(
 
                               hintText: "Email",
-                              onChanged: (data){
-                                email = data ;
-                              },
+                              onChanged: (value) => email = value,
+
                             ),
                             const SizedBox(height: 20,),
                             CustomTextField(
 
                               hintText: "Create Password",
-                              onChanged: (data){
-                                password = data ;
-                              },
+                              onChanged: (value) => password = value,
                             ),
                             const SizedBox(height: 20,),
                             CustomTextField(
 
                               hintText: "Confirm Password",
+                              onChanged: (value) => confirmPassword = value,
+
+
                             ),
                             const SizedBox(height: 25,),
-                            GestureDetector(
-                              onTap: (){
-
-
-                              },
-                              child: CreateDoctorAccountButton(
-                                onTap: () async{
-                                  try{
-                                    await createAccountUser();
-
-
-                                  }on FirebaseAuthException catch (e) {
-                                    if (e.code == 'weak-password') {
-                                      showSnakBar(context , "password is too weak.");
-
-                                    } else if (e.code == 'email-already-in-use') {
-                                      showSnakBar(context, "This Email is already exists.");
-
-                                    }
+                            CreateDoctorAccountButton(
+                                onTap: () async {
+                                  if ([firstName, lastName, email, password, confirmPassword].any((e) => e == null || e.trim().isEmpty)) {
+                                    showSnakBar(context, "Please fill all fields");
+                                    return;
                                   }
-                                  showSnakBar(context, "Account Created Successfully");
+
+                                  if (password != confirmPassword) {
+                                    showSnakBar(context, "Passwords do not match");
+                                    return;
+                                  }
+
+                                  try {
+                                    await PatientAuthService().registerPatient(
+                                      firstName: firstName!.trim(),
+                                      lastName: lastName!.trim(),
+                                      email: email!.trim(),
+                                      password: password!,
+                                      confirmPassword: confirmPassword!,
+                                    );
+                                    showSnakBar(context, "Account Created Successfully");
+                                    Navigator.push(context, MaterialPageRoute(builder: (_) => const LoginScreen(),));
+                                  } catch (e) {
+                                    showSnakBar(context, "Error: ${e.toString()}");
+                                  }
+                                }
 
 
 
-                                },
-
-                              ),
                             ),
                             const SizedBox(height: 10,),
                             Row(
@@ -357,7 +371,7 @@ class CreateAccountPatient extends StatelessWidget {
                                   children: [
                                     IconButton(onPressed: (){},
                                       iconSize: 25,
-                                        icon: Icon(Icons.check_box,
+                                        icon: const Icon(Icons.check_box,
                                         color: kprimaryColor,
                                         ),
                                     ),

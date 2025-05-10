@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:graduation_project/Features/Splash_Screens/presentation/views/second_splash_screen.dart';
 import 'package:swirl_icons/swirl_icons.dart';
 

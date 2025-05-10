@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:graduation_project/Features/Forget_Password/Presentation/views/forget_pass_screen.dart';
 import 'package:graduation_project/Features/Home_screen/Presentation/Views/home_screen.dart';
 import 'package:graduation_project/nav_bar.dart';
 
 import '../../../../constants.dart';
+import '../../data/login_service.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -13,6 +16,40 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+
+  final LoginService loginService = LoginService();
+
+  Future<void> handleLogin() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    final result = await LoginService.login(
+      emailController.text.trim(),
+      passwordController.text.trim(),
+    );
+
+    setState(() {
+      isLoading = false;
+    });
+
+    if (result['success']) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const NavBar()),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Login failed: ${result['message']}')),
+      );
+    }
+  }
+
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  bool isLoading = false;
+
+
   Color btnColor = Colors.black ;
   void changeColor() {
     setState(() {
@@ -151,6 +188,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                             const SizedBox(height: 20,),
                             TextFormField(
+                              controller: emailController,
                               decoration: InputDecoration(
                                 labelText: "Email",
                                 border: OutlineInputBorder(
@@ -160,10 +198,10 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             const SizedBox(height: 20,),
                             TextFormField(
+                              controller: passwordController,
                               obscureText: true,
                               decoration: InputDecoration(
-                                labelText: "password",
-
+                                labelText: "Password",
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(10),
                                 ),
@@ -216,14 +254,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: GestureDetector(
-                                onTap: (){
-                                  Navigator.push(context, MaterialPageRoute(builder: (context)=> const NavBar(),),);
-                                },
-                                child: const Center(
-                                  child: Text("Create Account",style: TextStyle(color: Colors.white,
-                                      fontSize: 22),),
-                                ),
-                              ),
+
+                                  onTap: handleLogin,
+                                child:  const Center(
+                              child: Text("Login", style: TextStyle(color: Colors.white, fontSize: 22)),
+                            ),
+
+                        ),
                             ),
 
 
