@@ -4,13 +4,14 @@ import 'package:graduation_project/constants.dart';
 import 'package:graduation_project/nav_bar.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({super.key, this.email});
+  final String? email;
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
         backgroundColor: kbeigeColor,
-      body: HomeScreenContent(),
+      body: HomeScreenContent(email:email?? '' ,),
 
     );
   }

@@ -11,15 +11,11 @@ import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 
 
-void main()
-async
-{
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized(); // ✅ REQUIRED
+  runApp(MyApp());
 }
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -33,7 +29,7 @@ class MyApp extends StatelessWidget {
       ],
       child: const GetMaterialApp(
         debugShowCheckedModeBanner: false,
-        home: //NavBar(),
+        home:
         SplashScreen(),
       ),
     );

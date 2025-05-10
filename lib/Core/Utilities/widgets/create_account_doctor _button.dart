@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart';
-
 import '../../../constants.dart';
 
 class CreateDoctorAccountButton extends StatelessWidget {
-   CreateDoctorAccountButton({super.key , required this.onTap});
+  const CreateDoctorAccountButton({super.key, required this.onTap});
 
+  final VoidCallback onTap;
 
-
-
-  VoidCallback? onTap;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-
       child: Container(
         height: 55,
         width: double.infinity,
@@ -22,8 +18,10 @@ class CreateDoctorAccountButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
         ),
         child: const Center(
-          child: Text("Create Account",style: TextStyle(color: Colors.white,
-              fontSize: 22),),
+          child: Text(
+            "Create Account",
+            style: TextStyle(color: Colors.white, fontSize: 22),
+          ),
         ),
       ),
     );

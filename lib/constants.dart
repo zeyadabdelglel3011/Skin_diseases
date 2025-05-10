@@ -10,7 +10,11 @@ const Color kbeigeColor = Color(0xFFF5E9DA);
 
 void showSnakBar(BuildContext context , String message) {
   ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(content: Text(message) ,),);
+
+    SnackBar(content: Text(message, style: const TextStyle(color: Colors.white),) ,
+    backgroundColor: Colors.green,
+
+    ),);
 }
 
 Future<void> createAccountUser() async {

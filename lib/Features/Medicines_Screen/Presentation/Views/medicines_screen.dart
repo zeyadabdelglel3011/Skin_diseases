@@ -13,6 +13,19 @@ class MedicinesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
+      appBar: AppBar(
+        backgroundColor: kbeigeColor,
+        title:  const Text(
+          "Medicines",
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
+
+        ),
+        centerTitle: true,
+        automaticallyImplyLeading: false,
+      ),
       backgroundColor: kbeigeColor,
       body: SafeArea(
         child: SingleChildScrollView(
@@ -20,38 +33,8 @@ class MedicinesScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 25 , vertical: 15),
             child: Column(
               children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        width: 40,
-                        height: 40,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(50),
-                          border: Border.all(
-                            color: kprimaryColor,
-                          ),
-                        ),
-                        child: IconButton(onPressed: (){
-                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> const HomeScreen()),);
-                        },
-                          icon:const Icon(Icons.arrow_back,
-                            color: Colors.black54,
-                          ) ,
-                        ),
-                      ),
-                      const Text(
-                        "Medicines",
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                        ),
 
-                      ),
-                      const SizedBox(width: 50,),
-                    ],
-                  ),
-                const SizedBox(height: 25,),
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [

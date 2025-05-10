@@ -10,18 +10,25 @@ import 'package:graduation_project/nav_bar.dart';
 import '../../../../Core/Utilities/widgets/create_account_doctor _button.dart';
 import '../../data/patient_auth_service.dart';
 
-class CreateAccountPatient extends StatelessWidget {
+class CreateAccountPatient extends StatefulWidget {
    CreateAccountPatient({super.key});
 
+  @override
+  State<CreateAccountPatient> createState() => _CreateAccountPatientState();
+}
 
-
+class _CreateAccountPatientState extends State<CreateAccountPatient> {
    String? email;
+
    String? password;
+
    String? firstName;
+
    String? lastName;
+
    String? confirmPassword;
 
-
+  bool isSelected = false;
 
    @override
   Widget build(BuildContext context) {
@@ -178,16 +185,17 @@ class CreateAccountPatient extends StatelessWidget {
                             ),
                             const SizedBox(height: 20,),
                             CustomTextField(
-
+                              obscureText: true,
                               hintText: "Create Password",
                               onChanged: (value) => password = value,
+
                             ),
                             const SizedBox(height: 20,),
                             CustomTextField(
-
                               hintText: "Confirm Password",
                               onChanged: (value) => confirmPassword = value,
 
+                              obscureText: true,
 
                             ),
                             const SizedBox(height: 25,),
@@ -211,8 +219,10 @@ class CreateAccountPatient extends StatelessWidget {
                                       password: password!,
                                       confirmPassword: confirmPassword!,
                                     );
-                                    showSnakBar(context, "Account Created Successfully");
-                                    Navigator.push(context, MaterialPageRoute(builder: (_) => const LoginScreen(),));
+                                    showSnakBar(context,"Account Created Successfully" ,
+
+                                    );
+                                    Navigator.push(context, MaterialPageRoute(builder: (_) => const LoginScreen(userType: 'patient',),));
                                   } catch (e) {
                                     showSnakBar(context, "Error: ${e.toString()}");
                                   }
@@ -234,7 +244,7 @@ class CreateAccountPatient extends StatelessWidget {
                                 const SizedBox(width: 10,),
                                 GestureDetector(
                                   onTap: (){
-                                    Navigator.push(context, MaterialPageRoute(builder: (context)=> const LoginScreen()),);
+                                    Navigator.push(context, MaterialPageRoute(builder: (context)=> const LoginScreen(userType: "patient",)),);
                                   },
                                   child: const Text(
                                     'Login',
@@ -250,7 +260,7 @@ class CreateAccountPatient extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 Container(
-                                  width: 190,
+                                  width: 170,
                                   height: 2,
                                   decoration: BoxDecoration(
                                     color: Colors.grey.shade400,
@@ -259,7 +269,7 @@ class CreateAccountPatient extends StatelessWidget {
                                 const Text(
                                   'or',style: TextStyle(fontSize: 16),),
                                 Container(
-                                  width: 190,
+                                  width: 170,
                                   height: 2,
                                   decoration: BoxDecoration(
                                     color: Colors.grey.shade400,
@@ -369,12 +379,17 @@ class CreateAccountPatient extends StatelessWidget {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    IconButton(onPressed: (){},
-                                      iconSize: 25,
-                                        icon: const Icon(Icons.check_box,
-                                        color: kprimaryColor,
-                                        ),
+                                    Checkbox(
+
+                                      activeColor: kprimaryColor,
+                                      value: isSelected,
+                                      onChanged: (bool? value) {
+                                        setState(() {
+                                          isSelected = value ?? false;
+                                        });
+                                      },
                                     ),
+
                                     const Text(
                                       'I accept the privacy policy\n And agree to the terms of service',
                                       style: TextStyle(

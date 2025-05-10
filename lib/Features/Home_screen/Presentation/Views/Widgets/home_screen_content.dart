@@ -13,7 +13,8 @@ import 'hello_widget.dart';
 import 'medical_blog_widget.dart';
 
 class HomeScreenContent extends StatefulWidget {
-  const HomeScreenContent({super.key});
+  final String email;
+  const HomeScreenContent({super.key, required this.email});
 
   @override
   State<HomeScreenContent> createState() => _HomeScreenContentState();
@@ -30,7 +31,7 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
           padding: const EdgeInsets.symmetric(horizontal: 25 , vertical: 15),
           child: Column(
             children: [
-              const Hello_Widget(),
+               Hello_Widget(email: widget.email,),
               const SizedBox(height: 25,),
               // vertical
               ListView.separated(

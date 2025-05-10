@@ -86,7 +86,7 @@ class EntryScreen extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 20 , ),
                   child: GestureDetector(
                     onTap: (){
-                    //  Navigator.push(context, MaterialPageRoute(builder: (context)=> const CreateAccountDoctor()),);
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=> const CreateAccountDoctor()),);
 
                     },
                     child: Container(
