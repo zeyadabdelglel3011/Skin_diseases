@@ -25,15 +25,15 @@ class DoctorService {
 
     if (response.statusCode == 200) {
       final body = json.decode(response.body);
-      print('📦 Raw doctor data: $body');
+      print('📦 Raw doctor view: $body');
 
       final List<dynamic> data;
       if (body is List) {
         data = body;
-      } else if (body['data'] is List) {
-        data = body['data'];
+      } else if (body['view'] is List) {
+        data = body['view'];
       } else {
-        throw Exception('Unexpected doctor data format');
+        throw Exception('Unexpected doctor view format');
       }
 
       return data.map((json) => DoctorModel.fromJson(json)).toList();

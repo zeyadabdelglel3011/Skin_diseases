@@ -14,7 +14,7 @@ class DoctorModel {
   });
 
   factory DoctorModel.fromJson(Map<String, dynamic> json) {
-    final profile = json['profile'] ?? {};
+    final profile = json['profile_doctor'] ?? {};
 
     // Combine first and last name into one 'name' field
     final firstName = json['first_name']?.toString().trim() ?? '';
