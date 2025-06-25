@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:graduation_project/Features/Home_screen/Presentation/Views/home_screen.dart';
 
 import '../constants.dart';
 
@@ -18,6 +19,19 @@ class _MedicalBlogScreenState extends State<MedicalBlogScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: kbeigeColor,
+        title:  const Text(
+          "Medical Vlogs",
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
+
+        ),
+        centerTitle: true,
+        automaticallyImplyLeading: false,
+      ),
       backgroundColor: kbeigeColor,
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
@@ -27,36 +41,10 @@ class _MedicalBlogScreenState extends State<MedicalBlogScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    margin:  const EdgeInsets.symmetric(horizontal: 20),
-                    width: 40,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(50),
-                      border: Border.all(
-                        color: kprimaryColor,
-                      ),
-                    ),
-                    child: IconButton(onPressed: (){
-                      Navigator.pop(context);
-                    },
-                      icon:const Icon(Icons.arrow_back,
-                        color: Colors.black,
-                      ) ,
-                    ),
-                  ),
-                  const Center(
-                    child:  Text(
-                      "Medical Vlogs",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 30,
-                      ),
-                      //textAlign: TextAlign.center,
-                    ),
-                  ),
 
-                  SizedBox(height: 25,),
+
+
+
                   Container(
                     padding: EdgeInsets.only(left: 30.0,top: 20.0,bottom:10.0,right: 10.0),
                     width: MediaQuery.of(context).size.width,

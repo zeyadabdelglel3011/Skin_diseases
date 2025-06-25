@@ -33,8 +33,8 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         home:
         //ProfileDoctorScreen(),
-        MedicinesDetails(),
-        //SplashScreen(),
+        //MedicinesDetails(),
+        SplashScreen(),
       ),
     );
 

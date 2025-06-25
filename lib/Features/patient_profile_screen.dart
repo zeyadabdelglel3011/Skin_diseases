@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:graduation_project/Features/Home_screen/Presentation/Views/home_screen.dart';
+import 'package:graduation_project/Features/Medicines_Screen/Presentation/Views/medicines_screen.dart';
 import '../constants.dart';
 import 'edit_profile_screen.dart';
 import 'history_screen.dart';
@@ -15,6 +17,19 @@ class PatientProfileScreen extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: kbeigeColor,
+        title:  const Text(
+          "Profile",
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
+
+        ),
+        centerTitle: true,
+        automaticallyImplyLeading: false,
+      ),
       backgroundColor: kbeigeColor,
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
@@ -22,35 +37,6 @@ class PatientProfileScreen extends StatelessWidget{
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  margin:  const EdgeInsets.symmetric(horizontal: 20),
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(50),
-                    border: Border.all(
-                      color: kprimaryColor,
-                    ),
-                  ),
-                  child: IconButton(onPressed: (){
-                    Navigator.pop(context);
-                  },
-                    icon:const Icon(Icons.arrow_back,
-                      color: Colors.black,
-                    ) ,
-                  ),
-                ),
-                const Center(
-                  child:  Text(
-                    "Profile",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 30,
-                    ),
-                    //textAlign: TextAlign.center,
-                  ),
-                ),
-                const SizedBox(height: 20,),
                 Center(
                   child: Stack(
                     children: [
