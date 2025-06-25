@@ -4,6 +4,8 @@ import 'package:graduation_project/Features/Create_Account_Patient/presentation/
 import 'package:graduation_project/Features/Scan_Screen/Data/provider/scan_provider.dart';
 import 'package:graduation_project/Features/Splash_Screens/presentation/views/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:graduation_project/Features/medicines_details.dart';
+import 'package:graduation_project/Features/profile_doctor_screen.dart';
 import 'package:graduation_project/nav_bar.dart';
 import 'package:provider/provider.dart';
 
@@ -30,7 +32,9 @@ class MyApp extends StatelessWidget {
       child: const GetMaterialApp(
         debugShowCheckedModeBanner: false,
         home:
-        SplashScreen(),
+        //ProfileDoctorScreen(),
+        MedicinesDetails(),
+        //SplashScreen(),
       ),
     );
 
