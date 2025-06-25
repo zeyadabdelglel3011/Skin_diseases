@@ -1,0 +1,2 @@
+C:/Users/Windows11/StudioProjects/Skin_diseasesful/android/app/.cxx/Debug/6x1g5f2k/armeabi-v7a/CMakeFiles/edit_cache.dir
+C:/Users/Windows11/StudioProjects/Skin_diseasesful/android/app/.cxx/Debug/6x1g5f2k/armeabi-v7a/CMakeFiles/rebuild_cache.dir

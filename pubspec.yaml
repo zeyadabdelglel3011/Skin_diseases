@@ -46,6 +46,8 @@ dependencies:
   path: ^1.9.0
   pin_code_fields: ^8.0.1
   provider: ^6.1.2
+  icons_plus: ^5.0.0
+  line_awesome_flutter: ^3.0.1
   flutter_bloc: ^9.1.1
   shared_preferences: ^2.2.2
 dev_dependencies:
