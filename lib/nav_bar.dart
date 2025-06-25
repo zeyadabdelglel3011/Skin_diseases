@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:graduation_project/Features/Home_screen/Presentation/Views/home_screen.dart';
 import 'package:graduation_project/Features/Medicines_Screen/Presentation/Views/medicines_screen.dart';
 import 'package:graduation_project/Features/Scan_Screen/Presentation/Views/scan_screen.dart';
+import 'package:graduation_project/Features/medical_blog_screen.dart';
+import 'package:graduation_project/Features/patient_profile_screen.dart';
 
 import 'package:graduation_project/constants.dart';
 
@@ -21,21 +23,12 @@ class _NavBarState extends State<NavBar> {
   Widget build(BuildContext context) {
     final List<Widget> selectedPage = [
       HomeScreen(email: widget.email),
-      const Center(
-        child: Text(
-          "medical blog",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
-        ),
-      ),
-      // const MedicalBlogScreen(),
+
+
+      const MedicalBlogScreen(),
       const ScanScreen(),
       const MedicinesScreen(),
-      const Center(
-        child: Text(
-          "Profile",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
-        ),
-      ),
+      const PatientProfileScreen(),
     ];
 
     return Scaffold(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:graduation_project/Features/chat_screen.dart';
 
 import '../../../../../constants.dart';
 import '../../../data/services/doctor_services.dart';
@@ -197,7 +198,7 @@ class DoctorCard extends StatelessWidget {
                         ),
                       ),
                       onPressed: () {
-                       //Navigator.push(context, MaterialPageRoute(builder: (context) => ChatScreen()));
+                       Navigator.push(context, MaterialPageRoute(builder: (context) => ChatScreen()));
                       },
                       child: const Text(
                         "Start chat",
