@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:graduation_project/Features/Home_screen/Presentation/Views/home_screen.dart';
 
-import '../constants.dart';
+import '../../../../constants.dart';
 
 
 
@@ -46,7 +46,7 @@ class _MedicalBlogScreenState extends State<MedicalBlogScreen> {
 
 
                   Container(
-                    padding: EdgeInsets.only(left: 30.0,top: 20.0,bottom:10.0,right: 10.0),
+                    padding: const EdgeInsets.only(left: 30.0,top: 20.0,bottom:10.0,right: 10.0),
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
                       color:Color(0xffCEB395),
@@ -145,7 +145,7 @@ class _MedicalBlogScreenState extends State<MedicalBlogScreen> {
                             const SizedBox(width: 10,),
                             Image.asset('images/dis1.png',
                               fit: BoxFit.cover,
-                              width: 180,
+                              width: 170,
                               height: 215,
                             ),
 
@@ -256,7 +256,7 @@ class _MedicalBlogScreenState extends State<MedicalBlogScreen> {
                             const SizedBox(width: 10,),
                             Image.asset('images/dis3.png',
                               fit: BoxFit.cover,
-                              width: 180,
+                              width: 170,
                               height: 215,
                             ),
 

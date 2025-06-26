@@ -72,8 +72,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         ),
                         CupertinoSwitch(
                             activeColor:kprimaryColor ,
-                            inactiveThumbColor: kprimaryColor ,
-                            inactiveTrackColor:Color(0xffFFFFFF),
+                            thumbColor: kprimaryColor ,
+                         //   inactiveTrackColor:Color(0xffFFFFFF),
                             //activeTrackColor: ,
                             value: isSwitchon, onChanged: (value){
                           setState(() {
@@ -97,8 +97,8 @@ class _NotificationScreenState extends State<NotificationScreen> {
                           ),),
                         CupertinoSwitch(
                             activeColor:kprimaryColor ,
-                            inactiveThumbColor: kprimaryColor ,
-                            inactiveTrackColor:Color(0xffFFFFFF),
+                            thumbColor: kprimaryColor ,
+                           // inactiveTrackColor:Color(0xffFFFFFF),
                             value:_isOn,
                             onChanged: (bool ? newValue){
                               setState(() {

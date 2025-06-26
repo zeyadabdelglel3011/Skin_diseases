@@ -3,36 +3,42 @@ import 'package:flutter/material.dart';
 import 'package:graduation_project/Features/Home_screen/Presentation/Views/home_screen.dart';
 import 'package:graduation_project/Features/Medicines_Screen/Presentation/Views/medicines_screen.dart';
 import 'package:graduation_project/Features/Scan_Screen/Presentation/Views/scan_screen.dart';
-import 'package:graduation_project/Features/medical_blog_screen.dart';
-import 'package:graduation_project/Features/patient_profile_screen.dart';
-
+import 'package:graduation_project/Features/medical_blog/presentation/view/medical_blog_screen.dart';
+import 'package:graduation_project/Features/profile_patient/presentation/view/patient_profile_screen.dart';
 import 'package:graduation_project/constants.dart';
 
 class NavBar extends StatefulWidget {
-  const NavBar({super.key, this.email});
+  const NavBar({super.key, this.email, this.index = 0});
+
   final String? email;
+  final int index;
 
   @override
   State<NavBar> createState() => _NavBarState();
 }
 
 class _NavBarState extends State<NavBar> {
-  int currentIndex = 0;
+  late int currentIndex;
+  late List<Widget> selectedPages;
 
   @override
-  Widget build(BuildContext context) {
-    final List<Widget> selectedPage = [
-      HomeScreen(email: widget.email),
+  void initState() {
+    super.initState();
+    currentIndex = widget.index;
 
-
+    selectedPages = [
+      HomeScreen(email: widget.email ?? ""), // تفادي null هنا
       const MedicalBlogScreen(),
       const ScanScreen(),
       const MedicinesScreen(),
       const PatientProfileScreen(),
     ];
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
-      body: selectedPage[currentIndex],
+      body: selectedPages[currentIndex],
       bottomNavigationBar: BottomAppBar(
         elevation: 1,
         height: 60,
@@ -59,6 +65,7 @@ class _NavBarState extends State<NavBar> {
                 color: currentIndex == 1 ? kprimaryColor : Colors.grey.shade400,
               ),
             ),
+            const SizedBox(width: 40), // لإفساح المجال للفاب
             IconButton(
               onPressed: () => setState(() => currentIndex = 3),
               icon: Icon(

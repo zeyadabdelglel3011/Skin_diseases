@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/Features/chat_screen.dart';
+import 'package:graduation_project/Features/chat_screen/presentation/view/chat_screen.dart';
 
 import '../../../../../constants.dart';
 import '../../../data/services/doctor_services.dart';

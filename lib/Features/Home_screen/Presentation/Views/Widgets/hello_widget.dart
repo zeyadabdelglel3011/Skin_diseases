@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../../../../constants.dart';
 
 class Hello_Widget extends StatelessWidget {
@@ -7,28 +6,36 @@ class Hello_Widget extends StatelessWidget {
 
   const Hello_Widget({super.key, required this.email});
 
-  String extractName(String email) {
+  String? extractName(String email) {
+    if (email.isEmpty || !email.contains('@')) {
+      return null; // لا اسم
+    }
+
     final namePart = email.split('@').first;
-    return namePart[0].toUpperCase() + namePart.substring(1);
+    if (namePart.isEmpty) return null;
+
+    return namePart[0].toUpperCase() + namePart.substring(1).toLowerCase();
   }
 
   @override
   Widget build(BuildContext context) {
-    String name = extractName(email);
+    final String? name = extractName(email);
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text.rich(
               TextSpan(
                 text: "Hello,",
                 style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
                 ),
-                children: [
+                children: name != null
+                    ? [
                   TextSpan(
                     text: "\n$name !",
                     style: const TextStyle(
@@ -37,7 +44,8 @@ class Hello_Widget extends StatelessWidget {
                       color: kprimaryColor,
                     ),
                   ),
-                ],
+                ]
+                    : [], // لا تضف الاسم إن لم يكن موجودًا
               ),
             ),
           ],

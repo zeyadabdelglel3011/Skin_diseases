@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../constants.dart';
+import '../../../../constants.dart';
 
 
 
@@ -67,7 +67,7 @@ class _ChatScreenState extends State<ChatScreen> {
                             fontSize: 20,
                           ),
                         ),
-                        SizedBox(width: 70,),
+                        SizedBox(width: 45,),
                         Icon(CupertinoIcons.video_camera,size: 40,),
                         SizedBox(width: 15,),
                         Icon(CupertinoIcons.phone,size: 30,),

@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:graduation_project/Features/Home_screen/Data/Models/hint_data.dart';
+import 'package:graduation_project/Features/Home_screen/Presentation/Views/home_screen.dart';
 import 'package:graduation_project/Features/Medicines_Screen/Data/models/medicineData.dart';
 import 'package:graduation_project/Features/Medicines_details/Presentation/Views/widgets/medicines_details_content.dart';
 import 'package:graduation_project/constants.dart';
+import 'package:graduation_project/nav_bar.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
 
@@ -39,7 +41,7 @@ class _MedicinesDetailsState extends State<MedicinesDetails> {
                       ),
                     ),
                     child: IconButton(onPressed: (){
-                      Navigator.pop(context);
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> HomeScreen()));
                     },
                       icon:const Icon(Icons.arrow_back,
                         color: Colors.black,

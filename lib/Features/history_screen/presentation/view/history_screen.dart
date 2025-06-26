@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
-import '../constants.dart';
+import '../../../../constants.dart';
 
 
 
@@ -176,7 +176,7 @@ Widget HistoryWidget(BuildContext context){
 
             Image.asset('images/dis.png',
               fit: BoxFit.cover,
-              width: 150,
+              width: 130,
               height: 100,
             ),
 

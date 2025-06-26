@@ -1,21 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import '../constants.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
+import '../../../../constants.dart';
 
 
 
 
-class EditProfileScreen extends StatefulWidget{
-  const EditProfileScreen ({super.key});
+class EditProfileDoctorScreen extends StatefulWidget{
+  const EditProfileDoctorScreen ({super.key});
 
   @override
-  State<EditProfileScreen> createState() => _EditProfileScreenState();
+  State<EditProfileDoctorScreen> createState() => _EditProfileDoctorScreenState();
 }
 
-class _EditProfileScreenState extends State<EditProfileScreen> {
+class _EditProfileDoctorScreenState extends State<EditProfileDoctorScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,7 +60,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       SizedBox(
                         width: 120,
                         height: 120,
-                        child: ClipRRect(borderRadius: BorderRadius.circular(100),child: Image.asset('images/ing.png'),),
+                        child: ClipRRect(borderRadius: BorderRadius.circular(100),child: Image.asset('images/doc.png'),),
                       ),
                       Positioned(
                         bottom: 0,
@@ -81,7 +80,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 ),
                 const SizedBox(height: 10,),
                 const Center(
-                  child:  Text("Lujy",
+                  child:  Text("Dr Ziad Henry",
                     style: TextStyle(
                       color: kprimaryColor,
                       fontWeight: FontWeight.bold,
@@ -89,7 +88,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     ),),
                 ),
                 const Center(
-                  child:  Text("Lujaina646@gmail.com",
+                  child:  Text("Ziadhenry0@gmail.com",
                     style:TextStyle(
                       color:Color(0xff676666),
                       fontSize: 15,
@@ -138,7 +137,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       const SizedBox(height: 20,),
                       TextFormField(
                         decoration: InputDecoration(
-                          labelText: " Date of birth ",
+                          labelText: " ID Number ",
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -147,7 +146,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       const SizedBox(height: 20,),
                       TextFormField(
                         decoration: InputDecoration(
-                          labelText: " Gender ",
+                          labelText: " Date of birth ",
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -187,7 +186,6 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             )
         ),
       ),
-
     );
   }
 }

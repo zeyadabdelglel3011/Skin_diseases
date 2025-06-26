@@ -1,344 +1,170 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:graduation_project/Features/Home_screen/Data/Models/hint_data.dart';
-import 'package:graduation_project/Features/Medicines_Screen/Data/models/medicineData.dart';
-import 'package:graduation_project/Features/Medicines_details/Presentation/Views/widgets/medicines_details_content.dart';
 import 'package:graduation_project/constants.dart';
+
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
-import '../../../Medicines_Screen/Presentation/Views/medicines_screen.dart';
+import '../../../../nav_bar.dart';
 
 class MedicinesDetails extends StatelessWidget {
-   const MedicinesDetails({super.key,  });
+  const MedicinesDetails({super.key});
 
+  final List<Map<String, String>> pharmacies = const [
+    {
+      "name": "Elezaby pharmacy",
+      "image": "images/elez.png",
+      "url": "www.elezabypharamcy.com",
+      "location": "Mansoura, Kanat Swez Street",
+      "phone": "19956"
+    },
+    {
+      "name": "Eltarshouby pharmacy",
+      "image": "images/elta.png",
+      "url": "www.eltarshoubypharamcy.com",
+      "location": "Mansoura, Kanat Swez Street",
+      "phone": "19956"
+    },
+    {
+      "name": "Sally pharmacy",
+      "image": "images/sall.png",
+      "url": "www.sallypharamcy.com",
+      "location": "Mansoura, Kanat Swez Street",
+      "phone": "19956"
+    },
+    {
+      "name": "Amasha pharmacy",
+      "image": "images/ama.png",
+      "url": "www.amashapharamcy.com",
+      "location": "Mansoura, Kanat Swez Street",
+      "phone": "19956"
+    },
+  ];
 
-
+  Widget buildPharmacyCard(Map<String, String> data) {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      decoration: BoxDecoration(
+        color: const Color(0xffD1C1B2),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Image.asset(
+            data["image"]!,
+            width: 50,
+            height: 50,
+            fit: BoxFit.cover,
+          ),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  data["name"]!,
+                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  children: [
+                    const Icon(CupertinoIcons.link),
+                    const SizedBox(width: 10),
+                    Flexible(child: Text(data["url"]!)),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  children: [
+                    const Icon(CupertinoIcons.location_solid),
+                    const SizedBox(width: 10),
+                    Flexible(child: Text(data["location"]!)),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  children: [
+                    const Icon(LineAwesomeIcons.phone_volume_solid),
+                    const SizedBox(width: 10),
+                    Text(data["phone"]!),
+                  ],
+                ),
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-     backgroundColor: kbeigeColor,
-      body: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 5),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  margin:  const EdgeInsets.symmetric(horizontal: 20),
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(50),
-                    border: Border.all(
-                      color: kprimaryColor,
-                    ),
-                  ),
-                  child: IconButton(onPressed: (){
-                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> MedicinesScreen(),) ,);
+      backgroundColor: kbeigeColor,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(vertical: 5),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Back button
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 20),
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(50),
+                  border: Border.all(color: kprimaryColor),
+                ),
+                child: IconButton(
+                  onPressed: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const NavBar(index: 3),
+                      ),
+                    );
                   },
-                    icon:const Icon(Icons.arrow_back,
-                      color: Colors.black54,
-                    ) ,
+                  icon: const Icon(Icons.arrow_back, color: Colors.black54),
+                ),
+              ),
+
+              const SizedBox(height: 10),
+              const Center(
+                child: Text(
+                  "Dovate Cream",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                ),
+              ),
+              const SizedBox(height: 10),
+              Center(
+                child: Image.asset(
+                  'images/cream.png',
+                  fit: BoxFit.cover,
+                  width: 150,
+                  height: 150,
+                ),
+              ),
+              const SizedBox(height: 20),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Text(
+                  "Available In:",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 25,
+                    color: kprimaryColor,
                   ),
                 ),
-                  const Center(
-                    child:  Text(
-                      "Dovate Cream",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 30,
-                      ),
-                      //textAlign: TextAlign.center,
-                    ),
-                  ),
-                  const SizedBox(height: 10,),
-                  Center(
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      margin:  const EdgeInsets.symmetric(horizontal: 30),
-                      child:  Image.asset('images/cream.png',
-                        fit: BoxFit.cover,
-                        width: 150,
-                        height: 150,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    margin:  const EdgeInsets.symmetric(horizontal: 20),
-                    child:  const Text("Available In:",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 25,
-                        color:  kprimaryColor,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 20,),
-                  Container(
-                    padding: const EdgeInsets.only(left: 20.0,top: 20.0,bottom:20.0,),
-                    decoration:
-                    BoxDecoration(
-                      color:const Color(0xffD1C1B2),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    margin:  const EdgeInsets.symmetric(horizontal: 20),
-                    width: MediaQuery.of(context).size.width,
-                    child:  Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Image.asset('images/elez.png',
-                          fit: BoxFit.cover,
-                          width: 50,
-                          height: 50,
-                        ),
-                        const SizedBox(width: 10,),
-                        const Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Text("Elezaby pharmacy",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 10,),
-                            Row(
-                              children: [
-                                Icon(CupertinoIcons.link),
-                                SizedBox(width: 10,),
-                                Text('WWW.Elezabypharamcy.com'),
-                              ],
+              ),
+              const SizedBox(height: 10),
 
-                            ),
-                            SizedBox(height: 10,),
-                            Row(
-                              children: [
-                                Icon(CupertinoIcons.location_solid),
-                                SizedBox(width: 10,),
-                                Text('Mansoura, Kanat Swez Street'),
-                              ],
-                            ),
-                            SizedBox(height: 10,),
-                            Row(
-                              children: [
-                                Icon(LineAwesomeIcons.phone_volume_solid),
-                                SizedBox(width: 10,),
-                                Text('19956'),
-                              ],
+              // Pharmacies List
+              ...pharmacies.map(buildPharmacyCard).toList(),
 
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-
-
-                  ),
-                  const SizedBox(height: 20,),
-                  Container(
-                    padding: const EdgeInsets.only(left: 20.0,top: 20.0,bottom:20.0,),
-                    decoration:
-                    BoxDecoration(
-                      color:const Color(0xffD1C1B2),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    margin:  const EdgeInsets.symmetric(horizontal: 20),
-                    width: MediaQuery.of(context).size.width,
-                    child:  Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Image.asset('images/elta.png',
-                          fit: BoxFit.cover,
-                          width: 50,
-                          height: 50,
-                        ),
-                        const SizedBox(width: 10,),
-                        const Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Text("Eltarshouby pharmacy",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 10,),
-                            Row(
-                              children: [
-                                Icon(CupertinoIcons.link),
-                                SizedBox(width: 10,),
-                                Text('WWW.Eltarshoubypharamcy.com'),
-                              ],
-
-                            ),
-                            SizedBox(height: 10,),
-                            Row(
-                              children: [
-                                Icon(CupertinoIcons.location_solid),
-                                SizedBox(width: 10,),
-                                Text('Mansoura, Kanat Swez Street'),
-                              ],
-                            ),
-                            SizedBox(height: 10,),
-                            Row(
-                              children: [
-                                Icon(LineAwesomeIcons.phone_volume_solid),
-                                SizedBox(width: 10,),
-                                Text('19956'),
-                              ],
-
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-
-
-                  ),
-                  const SizedBox(height: 20,),
-                  Container(
-                    padding: const EdgeInsets.only(left: 20.0,top: 20.0,bottom:20.0,),
-                    decoration:
-                    BoxDecoration(
-                      color:const Color(0xffD1C1B2),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    margin:  const EdgeInsets.symmetric(horizontal: 20),
-                    width: MediaQuery.of(context).size.width,
-                    child:  Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Image.asset('images/sall.png',
-                          fit: BoxFit.cover,
-                          width: 50,
-                          height: 50,
-                        ),
-                        const SizedBox(width: 10,),
-                        const Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Text("Sally pharmacy",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 10,),
-                            Row(
-                              children: [
-                                Icon(CupertinoIcons.link),
-                                 SizedBox(width: 10,),
-                                Text('WWW.Sallypharamcy.com'),
-                              ],
-
-                            ),
-                            SizedBox(height: 10,),
-                            Row(
-                              children: [
-                                Icon(CupertinoIcons.location_solid),
-                                SizedBox(width: 10,),
-                                Text('Mansoura, Kanat Swez Street'),
-                              ],
-                            ),
-                            SizedBox(height: 10,),
-                            Row(
-                              children: [
-                                Icon(LineAwesomeIcons.phone_volume_solid),
-                                SizedBox(width: 10,),
-                                Text('19956'),
-                              ],
-
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-
-
-                  ),
-                  const SizedBox(height: 20,),
-                  Container(
-                    padding: const EdgeInsets.only(left: 20.0,top: 20.0,bottom:20.0,),
-                    decoration:
-                    BoxDecoration(
-                      color:const Color(0xffD1C1B2),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    margin:  const EdgeInsets.symmetric(horizontal: 20),
-                    width: MediaQuery.of(context).size.width,
-                    child:  Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Image.asset('images/ama.png',
-                          fit: BoxFit.cover,
-                          width: 50,
-                          height: 50,
-                        ),
-                        const SizedBox(width: 10,),
-                        const Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                Text("Amasha pharmacy",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 10,),
-                            Row(
-                              children: [
-                                Icon(CupertinoIcons.link),
-                                SizedBox(width: 10,),
-                                Text('WWW.Sallypharamcy.com'),
-                              ],
-
-                            ),
-                            SizedBox(height: 10,),
-                            Row(
-                              children: [
-                                Icon(CupertinoIcons.location_solid),
-                                SizedBox(width: 10,),
-                                Text('Mansoura, Kanat Swez Street'),
-                              ],
-                            ),
-                            SizedBox(height: 10,),
-                            Row(
-                              children: [
-                                Icon(LineAwesomeIcons.phone_volume_solid),
-                                SizedBox(width: 10,),
-                                Text('19956'),
-                              ],
-
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-
-
-                  ),
-                  const SizedBox(height: 70,),
-              ],
-            ),
+              const SizedBox(height: 70),
+            ],
           ),
         ),
       ),

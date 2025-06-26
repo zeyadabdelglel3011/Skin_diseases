@@ -1,25 +1,35 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../constants.dart';
-import 'edti_profile_doctor_screen.dart';
-import 'notification_screen.dart';
-import 'privacy_policy_screen.dart';
+import 'package:graduation_project/Features/Home_screen/Presentation/Views/home_screen.dart';
+import 'package:graduation_project/Features/Medicines_Screen/Presentation/Views/medicines_screen.dart';
+import '../../../../constants.dart';
+import '../../../edit_profile_patient/presentation/view/edit_profile_screen.dart';
+import '../../../history_screen/presentation/view/history_screen.dart';
+import '../../../notification_screen.dart';
+import 'package:graduation_project/Features/privacy_policy_screen/presentation/views/privacy_policy_screen.dart';
+
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+
 import 'package:path/path.dart';
 
-
-
-class ProfileDoctorScreen extends StatefulWidget{
-  const ProfileDoctorScreen  ({super.key});
-
-  @override
-  State<ProfileDoctorScreen> createState() => _ProfileDoctorScreenState();
-}
-
-class _ProfileDoctorScreenState extends State<ProfileDoctorScreen> {
+class PatientProfileScreen extends StatelessWidget{
+  const PatientProfileScreen ({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: kbeigeColor,
+        title:  const Text(
+          "Profile",
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
+
+        ),
+        centerTitle: true,
+        automaticallyImplyLeading: false,
+      ),
       backgroundColor: kbeigeColor,
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
@@ -27,42 +37,14 @@ class _ProfileDoctorScreenState extends State<ProfileDoctorScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  margin:  const EdgeInsets.symmetric(horizontal: 20),
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(50),
-                    border: Border.all(
-                      color: kprimaryColor,
-                    ),
-                  ),
-                  child: IconButton(onPressed: (){
-                    Navigator.pop(context);
-                  },
-                    icon:const Icon(Icons.arrow_back,
-                      color: Colors.black,
-                    ) ,
-                  ),
-                ),
-                const Center(
-                  child:  Text(
-                    "Profile",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 30,
-                    ),
-                    //textAlign: TextAlign.center,
-                  ),
-                ),
-                const SizedBox(height: 20,),
                 Center(
                   child: Stack(
                     children: [
                       SizedBox(
                         width: 120,
                         height: 120,
-                        child: ClipRRect(borderRadius: BorderRadius.circular(100),child: Image.asset('images/doc.png'),),
+                        child: ClipRRect(borderRadius: BorderRadius.circular(100),
+                          child: Image.asset('images/ing.png'),),
                       ),
                       Positioned(
                         bottom: 0,
@@ -82,7 +64,7 @@ class _ProfileDoctorScreenState extends State<ProfileDoctorScreen> {
                 ),
                 const SizedBox(height: 10,),
                 const Center(
-                  child:  Text("Dr Ziad Henry",
+                  child:  Text("Lujy",
                     style: TextStyle(
                       color: kprimaryColor,
                       fontWeight: FontWeight.bold,
@@ -90,7 +72,7 @@ class _ProfileDoctorScreenState extends State<ProfileDoctorScreen> {
                     ),),
                 ),
                 const Center(
-                  child:  Text("Ziadhenry0@gmail.com",
+                  child:  Text("Lujaina646@gmail.com",
                     style:TextStyle(
                       color:Color(0xff676666),
                       fontSize: 15,
@@ -98,7 +80,9 @@ class _ProfileDoctorScreenState extends State<ProfileDoctorScreen> {
                 ),
                 const SizedBox(height: 50,),
 
-                ProfileMenuWidget("Edit Your Profile",LineAwesomeIcons.user_edit_solid,(){Navigator.push(context, MaterialPageRoute(builder: (e)=>const EditProfileDoctorScreen()));},true),
+                ProfileMenuWidget("Edit Your Profile",LineAwesomeIcons.user_edit_solid,(){Navigator.push(context, MaterialPageRoute(builder: (e)=>const EditProfileScreen()));},true),
+                const SizedBox(height: 10,),
+                ProfileMenuWidget("History",LineAwesomeIcons.history_solid,(){Navigator.push(context, MaterialPageRoute(builder: (e)=>const HistoryScreen()));},true),
                 const SizedBox(height: 10,),
                 ProfileMenuWidget("Privacy And Policy",LineAwesomeIcons.shield_alt_solid,(){Navigator.push(context, MaterialPageRoute(builder: (e)=>const PrivacyPolicyScreen()));},true),
                 const SizedBox(height: 10,),
@@ -112,6 +96,7 @@ class _ProfileDoctorScreenState extends State<ProfileDoctorScreen> {
         ),
       ),
     );
+
   }
 }
 Widget ProfileMenuWidget(String title,IconData icon,VoidCallback onTap,bool endIcon){
