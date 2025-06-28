@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/constants.dart';
-import 'package:graduation_project/Features/Create_Account_Patient/presentation/views/create_account_patient.dart';
-import 'package:graduation_project/Features/Create_Account_Doctor/presentation/views/create_account_doctor.dart';
+
+
+import '../../../doctor/Create_Account_Doctor/presentation/views/create_account_doctor.dart';
+import '../../../patient/Create_Account_Patient/presentation/views/create_account_patient.dart';
 
 class EntryScreen extends StatelessWidget {
   const EntryScreen({super.key});

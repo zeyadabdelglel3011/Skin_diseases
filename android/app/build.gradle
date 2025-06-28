@@ -7,8 +7,9 @@ plugins {
 
 android {
     namespace = "com.example.graduation_project"
-    compileSdk = flutter.compileSdkVersion
-    ndkVersion = 33
+    compileSdk = 35
+    ndkVersion = "25.1.8937393"
+
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -28,7 +29,7 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
-        minSdkVersion 23
+        minSdkVersion 24
     }
 
     buildTypes {
