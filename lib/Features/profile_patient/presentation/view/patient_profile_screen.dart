@@ -13,9 +13,25 @@ import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:path/path.dart';
 
 class PatientProfileScreen extends StatelessWidget{
-  const PatientProfileScreen ({super.key});
+  const PatientProfileScreen ({super.key, required this.email});
+
+
+  final String email;
+
+
+  String? extractName(String email) {
+    if (email.isEmpty || !email.contains('@')) {
+      return null; // لا اسم
+    }
+
+    final namePart = email.split('@').first;
+    if (namePart.isEmpty) return null;
+
+    return namePart[0].toUpperCase() + namePart.substring(1).toLowerCase();
+  }
   @override
   Widget build(BuildContext context) {
+    final String? name = extractName(email);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: kbeigeColor,
@@ -63,16 +79,19 @@ class PatientProfileScreen extends StatelessWidget{
                   ),
                 ),
                 const SizedBox(height: 10,),
-                const Center(
-                  child:  Text("Lujy",
+                Center(
+                  child: Text(
+                    name!,
                     style: TextStyle(
                       color: kprimaryColor,
                       fontWeight: FontWeight.bold,
                       fontSize: 30,
-                    ),),
+                    ),
+                  ),
                 ),
-                const Center(
-                  child:  Text("Lujaina646@gmail.com",
+
+                Center(
+                  child:  Text(email,
                     style:TextStyle(
                       color:Color(0xff676666),
                       fontSize: 15,
@@ -80,7 +99,7 @@ class PatientProfileScreen extends StatelessWidget{
                 ),
                 const SizedBox(height: 50,),
 
-                ProfileMenuWidget("Edit Your Profile",LineAwesomeIcons.user_edit_solid,(){Navigator.push(context, MaterialPageRoute(builder: (e)=>const EditProfileScreen()));},true),
+                ProfileMenuWidget("Edit Your Profile",LineAwesomeIcons.user_edit_solid,(){Navigator.push(context, MaterialPageRoute(builder: (e)=>EditProfileScreen(name: name, email: email)));},true),
                 const SizedBox(height: 10,),
                 ProfileMenuWidget("History",LineAwesomeIcons.history_solid,(){Navigator.push(context, MaterialPageRoute(builder: (e)=>const HistoryScreen()));},true),
                 const SizedBox(height: 10,),

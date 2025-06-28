@@ -1,9 +1,9 @@
 class DoctorModel {
   final String name;
-  final double rating;
+  final double rating; // Optional: assume 0 for now
   final String phone;
   final String email;
-  final String address;
+  final String address; // Optional: assume "Not provided" for now
 
   DoctorModel({
     required this.name,
@@ -14,30 +14,12 @@ class DoctorModel {
   });
 
   factory DoctorModel.fromJson(Map<String, dynamic> json) {
-    final profile = json['profile_doctor'] ?? {};
-
-    // Combine first and last name into one 'name' field
-    final firstName = json['first_name']?.toString().trim() ?? '';
-    final lastName = json['last_name']?.toString().trim() ?? '';
-    final fullName = '$firstName $lastName'.trim();
-
     return DoctorModel(
-      name: fullName.isEmpty ? 'Unknown Doctor' : fullName,
-      email: json['email']?.toString() ?? '',
-      phone: profile['phone']?.toString() ?? 'Not available',
-      address: profile['address']?.toString() ?? 'Mansoura',
-      rating: _parseRating(profile['rating']),
+      name: json['name']?.toString() ?? 'Unknown Doctor',
+      email: json['email']?.toString() ?? 'Not provided',
+      phone: json['phone_number']?.toString() ?? 'Not available',
+      address: 'Mansoura', // No address in response
+      rating: 0.0, // No rating in response
     );
-  }
-
-  static double _parseRating(dynamic value) {
-    if (value == null) return 0.0;
-    if (value is int) return value.toDouble();
-    if (value is double) return value;
-    if (value is String) {
-      final parsed = double.tryParse(value);
-      return parsed ?? 0.0;
-    }
-    return 0.0;
   }
 }

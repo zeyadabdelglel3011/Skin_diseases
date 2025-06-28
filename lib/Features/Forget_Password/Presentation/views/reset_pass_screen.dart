@@ -1,19 +1,19 @@
-
 import 'package:flutter/material.dart';
-
 import '../../../../../../../constants.dart';
 import '../../../Login/presentation/views/login_screen.dart';
+import '../../data/services/confirm_password_service.dart';
+
+class PasswordReset extends StatefulWidget {
 
 
-class PasswordReset extends StatefulWidget{
-  const PasswordReset ({super.key});
+  const PasswordReset({super.key, });
 
   @override
   State<PasswordReset> createState() => _PasswordResetState();
 }
 
 class _PasswordResetState extends State<PasswordReset> {
-  final _formkey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
   final TextEditingController _newPassController = TextEditingController();
   final TextEditingController _confirmPassController = TextEditingController();
 
@@ -24,25 +24,59 @@ class _PasswordResetState extends State<PasswordReset> {
     super.dispose();
   }
 
+  // Future<void> _resetPassword() async {
+  //   if (_formKey.currentState!.validate()) {
+  //     final result = await AuthService.resetPassword(
+  //       uid: widget.uid,
+  //       token: widget.token,
+  //       newPassword: _newPassController.text.trim(),
+  //     );
+  //
+  //     if (result['success']) {
+  //       showDialogFunc(
+  //         context,
+  //         'images/77.png',
+  //         "Password has been changed successfully",
+  //         "You have just reset your password, click on the button below to login.",
+  //       );
+  //     } else {
+  //       _showErrorDialog(result['message'] ?? "Unknown error occurred.");
+  //     }
+  //   }
+  // }
+
+  void _showErrorDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text("Error"),
+        content: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text("OK"),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kbeigeColor,
       body: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
         child: Stack(
           children: [
-            // Background circles
             Positioned(right: -120, top: -90, child: buildCircle(Colors.white)),
-            Positioned(right: 60, top: -90, child: buildCircle(Color(0xffDAC9B6))),
-            Positioned(left: -120, top: -90, child: buildCircle(Color(0xffCEB395))),
-
+            Positioned(right: 60, top: -90, child: buildCircle(const Color(0xffDAC9B6))),
+            Positioned(left: -120, top: -90, child: buildCircle(const Color(0xffCEB395))),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 80),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  buildBackButton(context),
+                  buildBackButton(),
                   const SizedBox(height: 50),
                   buildHeaderText(),
                   const SizedBox(height: 10),
@@ -66,7 +100,7 @@ class _PasswordResetState extends State<PasswordReset> {
     );
   }
 
-  Widget buildBackButton(BuildContext context) {
+  Widget buildBackButton() {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20),
       width: 40,
@@ -104,7 +138,7 @@ class _PasswordResetState extends State<PasswordReset> {
 
   Widget buildForm(BuildContext context) {
     return Form(
-      key: _formkey,
+      key: _formKey,
       child: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
@@ -154,29 +188,21 @@ class _PasswordResetState extends State<PasswordReset> {
                 ),
               ),
               const SizedBox(height: 80),
-              Container(
+              SizedBox(
                 height: 55,
                 width: double.infinity,
-                decoration: BoxDecoration(
-                  color: kprimaryColor,
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: GestureDetector(
-                  onTap: () {
-                    if (_formkey.currentState!.validate()) {
-                      showDialogFunc(
-                        context,
-                        'images/77.png',
-                        "Password has been changed successfully",
-                        "You have just reset your password, click on the button below to login.",
-                      );
-                    }
-                  },
-                  child: const Center(
-                    child: Text(
-                      "Reset Password",
-                      style: TextStyle(color: Colors.white, fontSize: 22),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: kprimaryColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
                     ),
+                  ),
+                  onPressed:(){},
+                  // _resetPassword,
+                  child: const Text(
+                    "Reset Password",
+                    style: TextStyle(color: Colors.white, fontSize: 22),
                   ),
                 ),
               ),
@@ -188,99 +214,73 @@ class _PasswordResetState extends State<PasswordReset> {
   }
 }
 
-showDialogFunc(context,img,title,desc){
-  return showDialog(
-      context: context,
-      builder: (context){
-        return Container(
-          padding: EdgeInsets.only(top: 120.0,bottom: 120.0),
-          child: Material(
-            type: MaterialType.transparency,
-            child: Container(
-              margin:  const EdgeInsets.symmetric(horizontal: 10),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: kbeigeColor,
+void showDialogFunc(BuildContext context, String img, String title, String desc) {
+  showDialog(
+    context: context,
+    builder: (context) {
+      return Dialog(
+        backgroundColor: Colors.transparent,
+        child: Container(
+          height: 600,
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            color: kbeigeColor,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Image.asset('images/2.png', width: 150, height: 150),
+              Center(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(5),
+                  child: Image.asset('images/suc.png', width: 70, height: 70),
+                ),
               ),
-
-              //padding: EdgeInsets.all(15),
-              width: MediaQuery.of(context).size.width,
-              height: 600,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children:<Widget> [
-                  Image.asset('images/2.png',
-                    width: 150,
-                    height: 150,
-                  ),
-
-                  Center(
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(5),
-                      child: Image.asset('images/suc.png',
-                        width: 70,
-                        height: 70,),
-                    ),
-                  ),
-                  Text(title,
-                    style:const TextStyle(
-                        fontSize: 25,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold
-                    ),
+              Text(
+                title,
+                style: const TextStyle(fontSize: 25, color: Colors.black, fontWeight: FontWeight.bold),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 50.0),
+                child: Center(
+                  child: Text(
+                    desc,
+                    style: const TextStyle(fontSize: 15, color: Color(0xff676666)),
                     textAlign: TextAlign.center,
                   ),
-                  const SizedBox(height: 20,),
-                  Container(
-                    padding: EdgeInsets.only(left: 50.0,right: 50.0),
-                    child: Center(
-                      child: Text(desc,
-                        style:const TextStyle(
-                          fontSize: 15,
-                          color:Color(0xff676666),
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 80,),
-                  Center(
-                    child: Container(
-                      height: 55,
-                      width: 380,
-                      decoration: BoxDecoration(
-                        color: kprimaryColor,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: GestureDetector(
-                        onTap: (){
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (e)=>const LoginScreen(userType: "",)));
-                        },
-                        child: const Center(
-                          child: Text("Login",style: TextStyle(color: Colors.white,
-                              fontSize: 22),),
-                        ),
-                      ),
-                    ),
-                  ),
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Image.asset('images/22.png',
-                    width: 166,
-                    height: 115,
-                  ),
-                ],
+                ),
               ),
-                ],
+              const SizedBox(height: 80),
+              Center(
+                child: SizedBox(
+                  height: 55,
+                  width: 380,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: kprimaryColor,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                    ),
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (e) => const LoginScreen(userType: "")),
+                      );
+                    },
+                    child: const Text("Login", style: TextStyle(color: Colors.white, fontSize: 22)),
+                  ),
+                ),
               ),
-            ),
+              Align(
+                alignment: Alignment.bottomRight,
+                child: Image.asset('images/22.png', width: 166, height: 115),
+              ),
+            ],
           ),
-        );
-      }
+        ),
+      );
+    },
   );
 }

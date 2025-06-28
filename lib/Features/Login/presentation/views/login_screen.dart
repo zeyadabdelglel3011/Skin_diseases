@@ -34,10 +34,10 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() => isLoading = false);
 
     if (result['success']) {
+
       final String name = widget.userType == 'doctor'
           ? 'Dr. ${emailController.text.trim()}'
           : emailController.text.trim();
-
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text(
@@ -52,7 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => NavBar(email: name),
+          builder: (context) => NavBar(email: name ),
         ),
       );
     } else {

@@ -254,11 +254,13 @@ class _CheckEmailState extends State<CheckEmail> {
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                   child: GestureDetector(
-                                    onTap: (){
+                                    onTap: () {
                                       Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder:(e)=>const PasswordReset()));
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (_) => const PasswordReset(),
+                                        ),
+                                      );
                                     },
                                     child: const Center(
                                       child: Text("Verify Code",style: TextStyle(color: Colors.white,

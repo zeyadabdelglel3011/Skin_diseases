@@ -1,13 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:graduation_project/constants.dart';
-
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
-
 import '../../../../nav_bar.dart';
 
 class MedicinesDetails extends StatelessWidget {
-  const MedicinesDetails({super.key});
+  final String title;
+  final String imagePath;
+
+  const MedicinesDetails({
+    super.key,
+    required this.title,
+    required this.imagePath,
+  });
 
   final List<Map<String, String>> pharmacies = const [
     {
@@ -131,22 +136,30 @@ class MedicinesDetails extends StatelessWidget {
               ),
 
               const SizedBox(height: 10),
-              const Center(
+
+              // Dynamic Title
+              Center(
                 child: Text(
-                  "Dovate Cream",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                  title,
+                  style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
                 ),
               ),
+
               const SizedBox(height: 10),
+
+              // Dynamic Image
               Center(
                 child: Image.asset(
-                  'images/cream.png',
-                  fit: BoxFit.cover,
-                  width: 150,
-                  height: 150,
+                  imagePath,
+                  fit: BoxFit.fill,
+                  width: 250,
+                  height: 200,
                 ),
               ),
+
               const SizedBox(height: 20),
+
+              // Available In Text
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Text(
@@ -158,9 +171,10 @@ class MedicinesDetails extends StatelessWidget {
                   ),
                 ),
               ),
+
               const SizedBox(height: 10),
 
-              // Pharmacies List
+              // Pharmacies
               ...pharmacies.map(buildPharmacyCard).toList(),
 
               const SizedBox(height: 70),

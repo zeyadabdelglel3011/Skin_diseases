@@ -53,11 +53,19 @@ class AllMedicines extends StatelessWidget {
               Positioned(
                 width: 150,
                 bottom: -5,
-                left: 13,
+                left: 6,
                 child: ElevatedButton(
 
-                  onPressed: (){
-                    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>  MedicinesDetails( ),),);
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MedicinesDetails(
+                          title: title,
+                          imagePath: pic,
+                        ),
+                      ),
+                    );
                   },
                   style: ButtonStyle(
                     backgroundColor: const WidgetStatePropertyAll(kprimaryColor),

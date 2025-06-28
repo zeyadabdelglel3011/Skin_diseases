@@ -8,10 +8,11 @@ import 'package:graduation_project/Features/profile_patient/presentation/view/pa
 import 'package:graduation_project/constants.dart';
 
 class NavBar extends StatefulWidget {
-  const NavBar({super.key, this.email, this.index = 0});
-
   final String? email;
+  final String? name;
   final int index;
+
+  const NavBar({super.key, this.email, this.name, this.index = 0});
 
   @override
   State<NavBar> createState() => _NavBarState();
@@ -27,11 +28,14 @@ class _NavBarState extends State<NavBar> {
     currentIndex = widget.index;
 
     selectedPages = [
-      HomeScreen(email: widget.email ?? ""), // تفادي null هنا
+      HomeScreen(email: widget.email ?? ""),
       const MedicalBlogScreen(),
       const ScanScreen(),
       const MedicinesScreen(),
-      const PatientProfileScreen(),
+      PatientProfileScreen(
+
+        email: widget.email ?? "example@email.com",
+      ),
     ];
   }
 
@@ -65,7 +69,7 @@ class _NavBarState extends State<NavBar> {
                 color: currentIndex == 1 ? kprimaryColor : Colors.grey.shade400,
               ),
             ),
-            const SizedBox(width: 40), // لإفساح المجال للفاب
+            const SizedBox(width: 40), // space for FAB
             IconButton(
               onPressed: () => setState(() => currentIndex = 3),
               icon: Icon(
