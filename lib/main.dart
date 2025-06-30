@@ -11,20 +11,14 @@ import 'package:provider/provider.dart';
 
 
 
-import 'Features/auth/Forget_Password/data/providers/reset_password_provider.dart';
+
 import 'Features/patient/Scan_Screen/Data/provider/scan_provider.dart';
 import 'firebase_options.dart';
 
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); // ✅ REQUIRED
-  runApp(MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => ResetPasswordProvider()),
-        // Add others here
-      ],
-
-      child: MyApp()));
+  runApp(MyApp());
 }
 
 
