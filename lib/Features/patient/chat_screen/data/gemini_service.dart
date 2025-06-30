@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:async';
 import 'package:http/http.dart' as http;
 
 class GeminiService {
@@ -8,21 +9,24 @@ class GeminiService {
     'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=YOUR_API_KEY',
   );
 
-  int _replyCount = 0; // Added counter
+  int _replyCount = 0;
 
   Future<String> sendMessage(String userMessage) async {
-    _replyCount++; // Increment on each call
+    _replyCount++;
 
     if (_replyCount == 2) {
+      await Future.delayed(const Duration(seconds: 3));
       return "Okay, could you send me a picture of your skin?";
     }
-    if(_replyCount ==3){
-      return" Eczema (Atopic Dermatitis)50% \n Psoriasis30% \n Vitiligo10%" ;
 
+    if (_replyCount == 3) {
+      await Future.delayed(const Duration(seconds: 3));
+      return "Eczema (Atopic Dermatitis) 50%\nPsoriasis 30%\nVitiligo 10%";
     }
-    if(_replyCount ==4){
-      return "You are welcome" ;
 
+    if (_replyCount == 4) {
+      await Future.delayed(const Duration(seconds: 3));
+      return "You are welcome";
     }
 
     try {
@@ -33,12 +37,8 @@ class GeminiService {
           "contents": [
             {
               "parts": [
-                {
-                  "text": "You are a doctor specialized in skin diseases."
-                },
-                {
-                  "text": userMessage
-                }
+                {"text": "You are a doctor specialized in skin diseases."},
+                {"text": userMessage}
               ]
             }
           ]

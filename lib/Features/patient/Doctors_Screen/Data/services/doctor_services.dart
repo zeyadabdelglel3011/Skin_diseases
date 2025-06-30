@@ -23,25 +23,39 @@ class DoctorService {
         },
       );
 
-      if (response.statusCode == 200) {
-        final decoded = json.decode(response.body);
-        print('📦 Raw doctor data: $decoded');
-
-        // Support both direct List and wrapped list under 'view'
-        final List<dynamic> data;
-        if (decoded is List) {
-          data = decoded;
-        } else if (decoded['view'] is List) {
-          data = decoded['view'];
-        } else {
-          throw Exception('Unexpected doctor data format');
-        }
-
-        // Convert to List<DoctorModel>
-        return data.map((item) => DoctorModel.fromJson(item)).toList();
-      } else {
+      if (response.statusCode != 200) {
         throw Exception('❌ Failed to load doctors: ${response.statusCode}');
       }
+
+      final decoded = json.decode(response.body);
+      print('📦 Raw doctor data: $decoded');
+
+      // Handle both raw list and wrapped under 'view'
+      final List<dynamic> data = decoded is List
+          ? decoded
+          : (decoded['view'] is List ? decoded['view'] : throw Exception('Unexpected doctor data format'));
+
+      // Assign descending ratings (starting from 5.0 down by 0.1 each)
+      double startRating = 5.0;
+      const double step = 0.2;
+
+      final images = [
+        'images/lujy.png',
+        'images/Mask group.png',
+        'images/zeyad.png',
+        'images/lujy.png',
+
+
+      ];
+
+      return List.generate(data.length, (index) {
+        final rating = (startRating - (index * step)).clamp(0.0, 5.0);
+        final profileImage = images[index % images.length];
+        final doctorJson = data[index];
+        doctorJson['profileImage'] = profileImage;
+        return DoctorModel.fromJson(doctorJson, manualRating: rating);
+      });
+
     } catch (e) {
       throw Exception('🚨 Error fetching doctors: $e');
     }

@@ -5,6 +5,7 @@ import 'package:graduation_project/nav_bar.dart';
 
 import '../../../../../constants.dart';
 import '../../../../doctor/nav_bar_doctor.dart';
+
 import '../../../Forget_Password/Presentation/views/forget_pass_screen.dart';
 import '../../data/login_service.dart';
 
@@ -212,7 +213,8 @@ class _LoginScreenState extends State<LoginScreen> {
           const Text('Remember Me', style: TextStyle(color: Colors.black54)),
         ]),
         GestureDetector(
-          onTap: () => Navigator.push(
+           onTap: () =>
+          Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => const ForgetPassScreen()),
           ),

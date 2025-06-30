@@ -195,7 +195,7 @@ class PatientCard extends StatelessWidget {
                         ),
                       ),
                       onPressed: () {
-                       Navigator.push(context, MaterialPageRoute(builder: (context) => ChatScreen(userName: '',)));
+                       Navigator.push(context, MaterialPageRoute(builder: (context) => ChatScreen(userName: '', doctorId: '',)));
                       },
                       child: const Text(
                         "Start chat",

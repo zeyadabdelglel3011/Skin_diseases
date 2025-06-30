@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
-
 import 'chat_body.dart';
 
 class ChatScreen extends StatelessWidget {
-  // ChatScreen now needs to accept userName
-  final String userName; // Add this field
+  final String userName;
+  final String doctorId;
 
-  const ChatScreen({super.key, required this.userName}); // Update constructor
+  const ChatScreen({
+    super.key,
+    required this.userName,
+    required this.doctorId,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.transparent, // Ensure this matches your app's background
-        body: ChatBody(userName: userName), // Pass userName to ChatBody
-       );
-    }
+
+      body: ChatBody(
+        userName: userName,
+        doctorId: doctorId,
+      ),
+    );
+  }
 }

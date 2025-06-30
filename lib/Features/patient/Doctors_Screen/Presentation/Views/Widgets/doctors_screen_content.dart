@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
-
 import '../../../../../../constants.dart';
 import '../../../../chat_screen/presentation/view/chat_screen.dart';
-import '../../../data/services/doctor_services.dart';
-import '../../../data/models/doctor_model.dart';
-
-import 'package:flutter/material.dart';
-
 import '../../../data/services/doctor_services.dart';
 import '../../../data/models/doctor_model.dart';
 
@@ -40,7 +34,7 @@ class DoctorsScreenContent extends StatelessWidget {
               child: Text(
                 'Failed to load doctors.\n${snapshot.error}',
                 textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 16, ),
+                style: const TextStyle(fontSize: 16),
               ),
             );
           }
@@ -75,7 +69,6 @@ class DoctorsScreenContent extends StatelessWidget {
 
 
 
-
 class DoctorCard extends StatelessWidget {
   final DoctorModel doctor;
 
@@ -97,9 +90,9 @@ class DoctorCard extends StatelessWidget {
               children: [
                 Column(
                   children: [
-                    const CircleAvatar(
-                      backgroundImage: AssetImage("images/Mask group.png"),
+                    CircleAvatar(
                       radius: 40,
+                      backgroundImage: AssetImage(doctor.profileImage),
                     ),
                     const SizedBox(height: 10),
                     Row(
@@ -119,8 +112,8 @@ class DoctorCard extends StatelessWidget {
                   child: Container(
                     width: 15,
                     height: 15,
-                    decoration: BoxDecoration(
-                      color: const Color(0xff8EF4BC),
+                    decoration: const BoxDecoration(
+                      color: Color(0xff8EF4BC),
                       shape: BoxShape.circle,
                     ),
                   ),
@@ -201,10 +194,12 @@ class DoctorCard extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => ChatScreen(userName: "Dr. ${doctor.name}"),
+                            builder: (context) => ChatScreen(
+                              userName: "Dr. ${doctor.name}",
+                              doctorId: doctor.email, // You may want to use doctor.id here
+                            ),
                           ),
                         );
-
                       },
                       child: const Text(
                         "Start chat",

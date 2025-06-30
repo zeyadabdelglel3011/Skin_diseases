@@ -1,17 +1,19 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:graduation_project/constants.dart';
-import 'package:graduation_project/Features/patient/chat_screen/presentation/view/widget/app_bar_chat.dart';
-import 'package:graduation_project/Features/patient/chat_screen/presentation/view/widget/chat_bubble.dart';
-import 'package:graduation_project/Features/patient/chat_screen/presentation/view/widget/input_text.dart';
+import 'package:provider/provider.dart';
+import '../../../../../constants.dart';
+import '../../data/chat_provider.dart';
 import '../../data/gemini_service.dart';
+import '../view/widget/app_bar_chat.dart';
+import '../view/widget/chat_bubble.dart';
+import '../view/widget/input_text.dart';
 
 class ChatBody extends StatefulWidget {
   final String userName;
+  final String doctorId;
 
-  const ChatBody({super.key, required this.userName});
+  const ChatBody({super.key, required this.userName, required this.doctorId});
 
   @override
   State<ChatBody> createState() => _ChatBodyState();
@@ -20,61 +22,75 @@ class ChatBody extends StatefulWidget {
 class _ChatBodyState extends State<ChatBody> {
   final TextEditingController _messageController = TextEditingController();
   final GeminiService _geminiService = GeminiService();
-  final List<Map<String, dynamic>> _messages = [];
   final ImagePicker _picker = ImagePicker();
 
-  void _sendMessage() async {
+  Future<void> _sendMessage() async {
     final message = _messageController.text.trim();
     if (message.isEmpty) return;
 
-    setState(() {
-      _messages.add({
-        'text': message,
-        'isMe': true,
-        'timestamp': TimeOfDay.now().format(context),
-        'image': null,
-      });
-    });
+    final provider = Provider.of<ChatProvider>(context, listen: false);
+    final time = TimeOfDay.now().format(context);
+
+    // Add user message
+    provider.addMessage(
+      widget.doctorId,
+      ChatMessage(
+        text: message,
+        isMe: true,
+        timestamp: time,
+        image: null,
+      ),
+    );
+
     _messageController.clear();
 
     try {
       final reply = await _geminiService.sendMessage(message);
-      setState(() {
-        _messages.add({
-          'text': reply,
-          'isMe': false,
-          'timestamp': TimeOfDay.now().format(context),
-          'image': null,
-        });
-      });
+
+      // Add AI reply
+      provider.addMessage(
+        widget.doctorId,
+        ChatMessage(
+          text: reply,
+          isMe: false,
+          timestamp: TimeOfDay.now().format(context),
+          image: null,
+        ),
+      );
     } catch (e) {
-      setState(() {
-        _messages.add({
-          'text': 'Error: ${e.toString()}',
-          'isMe': false,
-          'timestamp': TimeOfDay.now().format(context),
-          'image': null,
-        });
-      });
+      provider.addMessage(
+        widget.doctorId,
+        ChatMessage(
+          text: 'Error: ${e.toString()}',
+          isMe: false,
+          timestamp: time,
+          image: null,
+        ),
+      );
     }
   }
 
   Future<void> _sendImage() async {
     final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
     if (image != null) {
-      setState(() {
-        _messages.add({
-          'text': '',
-          'isMe': true,
-          'timestamp': TimeOfDay.now().format(context),
-          'image': File(image.path),
-        });
-      });
+      final provider = Provider.of<ChatProvider>(context, listen: false);
+      provider.addMessage(
+        widget.doctorId,
+        ChatMessage(
+          text: '',
+          isMe: true,
+          timestamp: TimeOfDay.now().format(context),
+          image: File(image.path),
+        ),
+      );
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<ChatProvider>(context);
+    final messages = provider.getMessagesForDoctor(widget.doctorId);
+
     return Container(
       width: double.infinity,
       decoration: const BoxDecoration(color: kbeigeColor),
@@ -84,14 +100,14 @@ class _ChatBodyState extends State<ChatBody> {
           Expanded(
             child: ListView.builder(
               padding: const EdgeInsets.all(8),
-              itemCount: _messages.length,
+              itemCount: messages.length,
               itemBuilder: (_, index) {
-                final msg = _messages[index];
+                final msg = messages[index];
                 return ChatBubble(
-                  message: msg['text'] ?? '',
-                  isMe: msg['isMe'],
-                  timestamp: msg['timestamp'] ?? '',
-                  image: msg['image'], // File or null
+                  message: msg.text,
+                  isMe: msg.isMe,
+                  timestamp: msg.timestamp,
+                  image: msg.image,
                 );
               },
             ),
@@ -101,7 +117,6 @@ class _ChatBodyState extends State<ChatBody> {
             onSendPressed: _sendMessage,
             onCameraPressed: _sendImage,
             onMicPressed: () {
-              // You can implement recording logic here
               print('Microphone button pressed');
             },
           ),

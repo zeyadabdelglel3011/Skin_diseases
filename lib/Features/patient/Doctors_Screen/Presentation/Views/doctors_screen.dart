@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../../constants.dart';
 
-import '../../../Home_screen/Presentation/Views/Widgets/doctors_widget.dart';
+
 import 'Widgets/doctors_screen_content.dart';
 
 class DoctorsScreen extends StatelessWidget {

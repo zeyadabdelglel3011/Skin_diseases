@@ -11,20 +11,15 @@ import 'package:provider/provider.dart';
 
 
 
-import 'Features/auth/Forget_Password/data/providers/reset_password_provider.dart';
+
 import 'Features/patient/Scan_Screen/Data/provider/scan_provider.dart';
+import 'Features/patient/chat_screen/data/chat_provider.dart';
 import 'firebase_options.dart';
 
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); // ✅ REQUIRED
-  runApp(MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => ResetPasswordProvider()),
-        // Add others here
-      ],
-
-      child: MyApp()));
+  runApp(MyApp());
 }
 
 
@@ -37,6 +32,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create:(create)=> ScanProvider() ),
+        ChangeNotifierProvider(create: (_) => ChatProvider()),
       ],
       child: const GetMaterialApp(
         debugShowCheckedModeBanner: false,
