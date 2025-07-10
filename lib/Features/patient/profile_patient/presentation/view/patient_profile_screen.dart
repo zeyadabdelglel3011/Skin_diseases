@@ -61,7 +61,7 @@ class PatientProfileScreen extends StatelessWidget{
                         width: 120,
                         height: 120,
                         child: ClipRRect(borderRadius: BorderRadius.circular(100),
-                          child: Image.asset('images/ing.png'),),
+                          child: Image.asset('images/zez.png'),),
                       ),
                       Positioned(
                         bottom: 0,

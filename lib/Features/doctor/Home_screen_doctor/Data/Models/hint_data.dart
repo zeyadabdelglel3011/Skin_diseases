@@ -24,13 +24,13 @@ List<HintData> hintData = [
 
 List<HintData> doctorsData  =[
   HintData(
-      title: "Dr.Lujain Ahmed",
-      desc: "Dr lujain is a dermatologist medical expert specializing in the diagnosis, treatment, and prevention of skin, hair, and nail conditions. They are skilled in managing common concerns like acne, eczema, psoriasis, and skin infections",
+      title: "Dr.Zakya",
+      desc: "Dr Zakya is a dermatologist medical expert specializing in the diagnosis, treatment, and prevention of skin, hair, and nail conditions. They are skilled in managing common concerns like acne, eczema, psoriasis, and skin infections",
       pic: "images/lujy.png",
   ),
   HintData(
-    title: "Dr.Ziad Henry",
-    desc: "Dr ziad is a dermatologist medical expert specializing in the diagnosis, treatment, and prevention of skin, hair, and nail conditions. They are skilled in managing common concerns like acne, eczema, psoriasis, and skin infections",
+    title: "Dr.zeyad abdelglel",
+    desc: "Dr zeyad abdelglel is a dermatologist medical expert specializing in the diagnosis, treatment, and prevention of skin, hair, and nail conditions. They are skilled in managing common concerns like acne, eczema, psoriasis, and skin infections",
     pic: "images/zeyad.png",
   ),
   HintData(

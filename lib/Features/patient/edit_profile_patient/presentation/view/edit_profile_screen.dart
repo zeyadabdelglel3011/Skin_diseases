@@ -86,7 +86,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       height: 120,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(100),
-                        child: Image.asset('images/ing.png'),
+                        child: Image.asset('images/zez.png'),
                       ),
                     ),
                     Positioned(

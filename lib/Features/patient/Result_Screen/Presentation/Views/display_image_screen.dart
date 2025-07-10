@@ -25,11 +25,21 @@ class _DisplayImageScreenState extends State<DisplayImageScreen> {
   }
 
   Future<void> fetchPrediction() async {
-    final response = await PredictService.fetchPrediction(widget.imagePath);
-    setState(() {
-      result = response;
-      isLoading = false;
-    });
+    try {
+      final response = await PredictService.fetchPrediction(widget.imagePath);
+      setState(() {
+        result = response;
+        isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+        result = null;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Failed to fetch prediction.")),
+      );
+    }
   }
 
   @override
@@ -39,25 +49,13 @@ class _DisplayImageScreenState extends State<DisplayImageScreen> {
       body: SafeArea(
         child: Column(
           children: [
+            // AppBar Row
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                    width: 40,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(50),
-                      border: Border.all(color: kprimaryColor),
-                    ),
-                    child: IconButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      icon: const Icon(Icons.arrow_back, color: Colors.black54),
-                    ),
-                  ),
+                  _buildBackButton(context),
                   const Text(
                     "Result",
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
@@ -67,14 +65,14 @@ class _DisplayImageScreenState extends State<DisplayImageScreen> {
               ),
             ),
 
-            const SizedBox(height: 30),
+            const SizedBox(height: 20),
 
-           //image
+            // Image Container
             Container(
               width: 300,
               height: 300,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20), // Adding border radius here
+                borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.black.withOpacity(0.1),
@@ -85,80 +83,123 @@ class _DisplayImageScreenState extends State<DisplayImageScreen> {
               ),
               child: widget.imagePath.isNotEmpty
                   ? ClipRRect(
-                borderRadius: BorderRadius.circular(20), // Rounding the image
+                borderRadius: BorderRadius.circular(20),
                 child: Image.file(File(widget.imagePath), fit: BoxFit.cover),
               )
-                  : const Text('No image selected'),
+                  : const Center(child: Text('No image selected')),
             ),
 
-            const Spacer(),
+            const SizedBox(height: 30),
 
+            // Result Section
+            Expanded(
+              child: isLoading
+                  ? const Center(child: CircularProgressIndicator())
+                  : result != null && result!.isNotEmpty
+                  ? ListView.builder(
+                itemCount: result!.length,
+                itemBuilder: (context, index) {
+                  final entry = result!.entries.elementAt(index);
+                  final value = double.tryParse(entry.value.toString()) ?? 0.0;
+                  final percentage = (value * 100).toInt();
 
-            isLoading
-                ? const CircularProgressIndicator()
-                : result != null
-                ? Column(
-              children: result!.entries.map((entry) {
-                final rawValue = double.tryParse(entry.value.toString()) ?? 0;
-                final displayPercentage = (rawValue * 100).toInt();
-
-                return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 12.0),
-                  child: Text.rich(
-                    TextSpan(
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 24),
+                    child: Column(
                       children: [
-                        TextSpan(
-                          children: [
-                            TextSpan(
-                              text: "${entry.key} ",
-                              style: const TextStyle(
-                                color: kprimaryColor,
-                                fontSize: 22,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
+                        Text(
+                          entry.key,
+                          style: const TextStyle(
+                            color: kprimaryColor,
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          textAlign: TextAlign.center,
                         ),
-
+                        const SizedBox(height: 6),
+                        LinearProgressIndicator(
+                          value: value.clamp(0.0, 1.0),
+                          backgroundColor: Colors.grey[300],
+                          color: kprimaryColor,
+                          minHeight: 10,
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          "$percentage%",
+                          style: const TextStyle(fontSize: 20 ,fontWeight: FontWeight.bold),
+                        ),
                       ],
                     ),
-                    textAlign: TextAlign.center,
-                  ),
-                );
-              }).toList(),
-
-
-
-
-            )
-                : const Text("No results"),
-
-            const Spacer(),
-
-            // Button
-            ElevatedButton(
-              style: const ButtonStyle(
-                backgroundColor: WidgetStatePropertyAll(kprimaryColor),
-                padding: WidgetStatePropertyAll(EdgeInsets.symmetric(horizontal: 50, vertical: 15)),
-                shape: WidgetStatePropertyAll(
-                  RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(6))),
-                ),
-              ),
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const DoctorsScreen()),
-                );
-              },
-              child: const Text(
-                "Share With A Doctor",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
-              ),
+                  );
+                },
+              )
+                  : const Center(child: Text("No results found")),
             ),
 
-            const SizedBox(height: 80),
+            const SizedBox(height: 10),
+
+            // Share Button
+            Padding(
+              padding: const EdgeInsets.only(bottom: 40),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: kprimaryColor,
+                  padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                ),
+                onPressed: () {
+                  if (result != null) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => DoctorsScreen(
+                          imagePath: widget.imagePath,
+                          result: result,
+                        ),
+                      ),
+                    );
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Please wait for results to load.")),
+                    );
+                  }
+
+                  Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DoctorsScreen(
+                              imagePath: widget.imagePath,
+                              result: result,
+                            ),
+                          ),
+                        );
+
+                },
+                child: const Text(
+                  "Share With A Doctor",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+                ),
+              ),
+            ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildBackButton(BuildContext context) {
+    return Container(
+      width: 40,
+      height: 40,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(50),
+        border: Border.all(color: kprimaryColor),
+      ),
+      child: IconButton(
+        onPressed: () => Navigator.pop(context),
+        icon: const Icon(Icons.arrow_back, color: Colors.black54),
       ),
     );
   }

@@ -4,6 +4,7 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 
 import 'package:graduation_project/Features/Splash_Screens/presentation/views/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:graduation_project/Features/doctor/create_blog_screen/data/provider/blog_provider.dart';
 
 
 import 'package:graduation_project/nav_bar.dart';
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create:(create)=> ScanProvider() ),
         ChangeNotifierProvider(create: (_) => ChatProvider()),
+        ChangeNotifierProvider(create: (_) => BlogProvider()),
       ],
       child: const GetMaterialApp(
         debugShowCheckedModeBanner: false,

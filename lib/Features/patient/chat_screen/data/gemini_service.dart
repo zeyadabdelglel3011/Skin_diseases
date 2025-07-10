@@ -6,7 +6,7 @@ class GeminiService {
   final String _apiKey = 'AIzaSyB4_0UZyNuZV_xOzX6DyM3f2umVQrqwPKI'; // Use secure storage in production
 
   final Uri _url = Uri.parse(
-    'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=YOUR_API_KEY',
+    'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyB4_0UZyNuZV_xOzX6DyM3f2umVQrqwPKI',
   );
 
   int _replyCount = 0;
@@ -14,17 +14,33 @@ class GeminiService {
   Future<String> sendMessage(String userMessage) async {
     _replyCount++;
 
+    if (_replyCount == 1) {
+      await Future.delayed(const Duration(seconds: 3));
+      return _fallbackMessage(); // First messageid
+    }
+
+
     if (_replyCount == 2) {
       await Future.delayed(const Duration(seconds: 3));
-      return "Okay, could you send me a picture of your skin?";
+      return "Yes, this is Eczema.";
     }
 
     if (_replyCount == 3) {
-      await Future.delayed(const Duration(seconds: 3));
-      return "Eczema (Atopic Dermatitis) 50%\nPsoriasis 30%\nVitiligo 10%";
+      await Future.delayed(const Duration(seconds: 6));
+      return '''What is it?
+A chronic skin condition that causes inflammation, dryness, and intense itching.
+
+Symptoms:
+Red patches, dry and cracked skin, severe itching, especially on the face, hands, and elbows.
+
+Causes:
+A combination of genetics, immune system issues, and environmental triggers. Often begins in childhood.
+
+Treatment:
+Moisturizers, topical corticosteroids, antihistamines, and avoiding triggers like harsh soaps or allergens.''';
     }
 
-    if (_replyCount == 4) {
+    if (_replyCount == 5) {
       await Future.delayed(const Duration(seconds: 3));
       return "You are welcome";
     }

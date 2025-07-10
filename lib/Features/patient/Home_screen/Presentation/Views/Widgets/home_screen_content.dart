@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_project/Features/doctor/Home_screen_doctor/Presentation/Views/Widgets/patient_widget.dart';
 
 import 'package:graduation_project/constants.dart';
+import 'package:graduation_project/nav_bar.dart';
 import '../../../../../doctor/Home_screen_doctor/Data/Models/hint_data.dart';
 import '../../../../../doctor/Home_screen_doctor/Data/Models/medical_blog_data.dart';
 import '../../../../../doctor/Home_screen_doctor/Presentation/Views/Widgets/medicines_widget.dart';
+import '../../../../../doctor/create_blog_screen/data/provider/blog_provider.dart';
 import '../../../../Doctors_Screen/Presentation/Views/doctors_screen.dart';
 import '../../../../Medicines_Screen/Data/models/medicineData.dart';
 import '../../../../Medicines_Screen/Presentation/Views/medicines_screen.dart';
@@ -24,6 +27,8 @@ class HomeScreenContent extends StatefulWidget {
 class _HomeScreenContentState extends State<HomeScreenContent> {
   @override
   Widget build(BuildContext context) {
+
+    final blogPosts = context.watch<BlogProvider>().blogPosts;
     return SafeArea(
       child: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 15),
@@ -35,24 +40,37 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
             const SizedBox(height: 15),
             _buildSectionHeader(
               title: "Medical Blog",
-              onTap: () {}, // TODO: Link to full blog list
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context)=> NavBar(index: 1,)));
+              }, // TODO: Link to full blog list
             ),
             const SizedBox(height: 15),
-            _buildHorizontalList(
-              height: 350,
-              itemCount: medicalData.length,
-              itemBuilder: (context, index) => MedicalBlogWidget(
-                title: medicalData[index].title,
-                desc: medicalData[index].desc,
-                pic: medicalData[index].pic,
+            blogPosts.isEmpty
+                ? Center(
+              child: Text(
+                "No recent updates",
+                style: TextStyle(color: Colors.grey.shade600),
               ),
+            )
+                : _buildHorizontalList(
+              height: 350,
+              itemCount: blogPosts.length.clamp(0, 5), // limit to latest 5
+              itemBuilder: (context, index) {
+                final post = blogPosts[index];
+                return MedicalBlogWidget(
+                  title: post['title'],
+                  desc: post['content'],
+                  pic: post['doctorImage'],
+
+                );
+              },
             ),
             const SizedBox(height: 15),
             _buildSectionHeader(
               title: "Doctors",
               onTap: () => Navigator.push(
                 context,
-                MaterialPageRoute(builder: (_) => DoctorsScreen()),
+                MaterialPageRoute(builder: (_) => const DoctorsScreen(imagePath: '', result: {},)),
               ),
             ),
             const SizedBox(height: 15),
@@ -70,7 +88,7 @@ class _HomeScreenContentState extends State<HomeScreenContent> {
               title: "Medicines",
               onTap: () => Navigator.push(
                 context,
-                MaterialPageRoute(builder: (_) => const MedicinesScreen()),
+                MaterialPageRoute(builder: (_) => const NavBar(index: 3)),
               ),
             ),
             const SizedBox(height: 15),

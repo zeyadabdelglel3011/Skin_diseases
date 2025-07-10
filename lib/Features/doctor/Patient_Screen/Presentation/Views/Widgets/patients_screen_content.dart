@@ -7,67 +7,192 @@ import '../../../Data/models/doctor_model.dart';
 import '../../../Data/services/patient_service.dart';
 
 
-class PatientsScreenContent extends StatelessWidget {
-  const PatientsScreenContent({super.key});
+class PatientScreenContent extends StatefulWidget{
+  const PatientScreenContent ({super.key});
 
-  Future<List<PatientModel>> _loadDoctors() => PatientService().fetchDoctors();
+  @override
+  State<PatientScreenContent> createState() => _PatientScreenContentState();
+}
 
+class _PatientScreenContentState extends State<PatientScreenContent> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: kbeigeColor,
-      appBar: AppBar(
-        title: const Text('Patients', style: TextStyle(fontWeight: FontWeight.bold)),
-        backgroundColor: kbeigeColor,
-        centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.pop(context),
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 5,),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    margin:  const EdgeInsets.symmetric(horizontal: 20),
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(50),
+                      border: Border.all(
+                        color: kprimaryColor,
+                      ),
+                    ),
+                    child: IconButton(onPressed: (){
+                      Navigator.pop(context);
+                    },
+                      icon:const Icon(Icons.arrow_back,
+                        color: Colors.black,
+                      ) ,
+                    ),
+                  ),
+                  const Center(
+                    child:  Text(
+                      "Patients",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30,
+                      ),
+                      //textAlign: TextAlign.center,
+                    ),
+                  ),
+                  const SizedBox(height: 30,),
+                  PatientWidget('images/zez.png','Zeyad Abdelglel','hello doctor'),
+                  const SizedBox(height: 20,),
+                  PatientWidget('images/girl.png','Zeko','I have a disease..'),
+                  const SizedBox(height: 20,),
+                  PatientWidget('images/girl.png','Alaa Mohamed','I have a problem..'),
+                  const SizedBox(height: 20,),
+                  PatientWidget('images/zez.png','Adham ali','can you see my leg '),
+
+                  const SizedBox(height: 70,),
+
+
+
+                ],
+              ),
+            )
         ),
-      ),
-      body: FutureBuilder<List<PatientModel>>(
-        future: _loadDoctors(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(color: kprimaryColor),
-            );
-          } else if (snapshot.hasError) {
-            return Center(
-              child: Text(
-                'Failed to load doctors.\n${snapshot.error}',
-                textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 16, ),
-              ),
-            );
-          }
-
-          final doctors = snapshot.data ?? [];
-
-          if (doctors.isEmpty) {
-            return const Center(
-              child: Text(
-                'No doctors found.',
-                style: TextStyle(fontSize: 18),
-              ),
-            );
-          }
-
-          return ListView.builder(
-            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 25),
-            itemCount: doctors.length,
-            itemBuilder: (context, index) {
-              final doctor = doctors[index];
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 20),
-                child: PatientCard(patients: doctor),
-              );
-            },
-          );
-        },
       ),
     );
   }
+}
+Widget PatientWidget(String image, String name,String title){
+  return(
+      Container(
+        padding: EdgeInsets.only(left: 15.0,top: 20.0,bottom:20.0,right: 10.0 ),
+        decoration:
+        BoxDecoration(
+          color:Color(0xffD1C1B2),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        margin:  const EdgeInsets.symmetric(horizontal: 15),
+        //width: MediaQuery.of(context).size.width,
+        child:  Column(
+          children: [
+            Row(
+              children: [
+                Stack(
+                  children: [
+                    CircleAvatar(
+                      radius: 40,
+                      child: Image.asset(image,
+                        width: 100,
+                        height: 100,
+                      ),
+                    ),
+
+                    Positioned(
+                      right: 1,
+                      top: 1,
+                      child: Container(
+                        width: 15,
+                        height: 15,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                          color: Color(0xff26CC71),
+                        ),
+                        // child:const Icon(LineAwesomeIcons.image,color:Colors.black,size: 25,),
+                      ),
+                    ),
+                  ],
+                ),
+
+                SizedBox(width: 20,),
+
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(name,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
+                    ),
+                    SizedBox(height: 5,),
+                    Text(title,
+                      style: TextStyle(
+                        color: Color(0xff676666),
+                        fontSize: 20,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(width: 30,),
+                Column(
+                  // crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('12:00Pm'),
+                    SizedBox(height: 20,),
+                    Center(
+                      child: Container(
+                        width: 30,
+                        height: 30,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                          color: Color(0xff26CC71),
+                        ),
+                        child: Center(child: Text('2')),
+                      ),
+                    ),
+                  ],
+
+                ),
+              ],
+            ),
+            const SizedBox(height: 10,),
+            Column(
+              children: [
+                GestureDetector(
+                  onTap: (){
+                    // Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //         builder: (e)=>const ));
+                  },
+                  child: Container(
+                    margin:  const EdgeInsets.symmetric(horizontal: 20),
+                    height: 55,
+                    width: 200,
+                    decoration: BoxDecoration(
+                      color: kprimaryColor,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: const Center(
+                      child: Text("Reply",
+                        style:
+                        TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            fontSize: 20),),
+                    ),
+
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ));
 }
 
 

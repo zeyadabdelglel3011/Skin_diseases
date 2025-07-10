@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:graduation_project/Features/doctor/Medicines_Screen_doctor/Presentation/Views/medicines_screen.dart';
+import 'package:graduation_project/Features/doctor/medical_blog_doctor/presentation/view/medical_blog_screen.dart';
 
 import 'package:graduation_project/constants.dart';
 import 'package:graduation_project/Features/doctor/Home_screen_doctor/Presentation/Views/home_screen.dart';
@@ -36,7 +37,7 @@ class _NavBarDoctorState extends State<NavBarDoctor> {
 
     selectedPages = [
       HomeScreenDoctor(email: widget.email ?? ""),
-      const MedicalBlogScreen(),
+      const MedicalBlogScreenDoctor(),
       const CreateBlogScreen(),
       const MedicinesScreenDoctor(),
       ProfileDoctorScreen(email: widget.email ?? ""),

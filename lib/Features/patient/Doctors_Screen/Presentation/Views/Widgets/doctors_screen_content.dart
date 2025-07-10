@@ -1,16 +1,43 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+
+import '../../../../../../constants.dart';
+import '../../../../chat_screen/presentation/view/chat_screen.dart';
+import '../../../data/services/doctor_services.dart';
+import '../../../data/models/doctor_model.dart';
+
+import 'dart:io';
+import 'package:flutter/material.dart';
+
 import '../../../../../../constants.dart';
 import '../../../../chat_screen/presentation/view/chat_screen.dart';
 import '../../../data/services/doctor_services.dart';
 import '../../../data/models/doctor_model.dart';
 
 class DoctorsScreenContent extends StatelessWidget {
-  const DoctorsScreenContent({super.key});
+  final String imagePath;
+  final Map<String, dynamic>? result;
+
+  const DoctorsScreenContent({
+    super.key,
+    required this.imagePath,
+    this.result,
+  });
 
   Future<List<DoctorModel>> _loadDoctors() => DoctorService().fetchDoctors();
 
+  String formatResult(Map<String, dynamic>? result) {
+    if (result == null || result.isEmpty) return "No result found.";
+    return result.entries.map((e) {
+      final percent = (double.tryParse(e.value.toString()) ?? 0.0) * 100;
+      return "${e.key}: ${percent.toStringAsFixed(1)}%";
+    }).join('\n');
+  }
+
   @override
   Widget build(BuildContext context) {
+    final formattedResult = formatResult(result);
+
     return Scaffold(
       backgroundColor: kbeigeColor,
       appBar: AppBar(
@@ -26,9 +53,7 @@ class DoctorsScreenContent extends StatelessWidget {
         future: _loadDoctors(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(color: kprimaryColor),
-            );
+            return const Center(child: CircularProgressIndicator(color: kprimaryColor));
           } else if (snapshot.hasError) {
             return Center(
               child: Text(
@@ -57,7 +82,11 @@ class DoctorsScreenContent extends StatelessWidget {
               final doctor = doctors[index];
               return Padding(
                 padding: const EdgeInsets.only(bottom: 20),
-                child: DoctorCard(doctor: doctor),
+                child: DoctorCard(
+                  doctor: doctor,
+                  imagePath: imagePath,
+                  resultText: formattedResult,
+                ),
               );
             },
           );
@@ -68,11 +97,17 @@ class DoctorsScreenContent extends StatelessWidget {
 }
 
 
-
 class DoctorCard extends StatelessWidget {
   final DoctorModel doctor;
+  final String imagePath;
+  final String resultText;
 
-  const DoctorCard({super.key, required this.doctor});
+  const DoctorCard({
+    super.key,
+    required this.doctor,
+    required this.imagePath,
+    required this.resultText,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -196,7 +231,9 @@ class DoctorCard extends StatelessWidget {
                           MaterialPageRoute(
                             builder: (context) => ChatScreen(
                               userName: "Dr. ${doctor.name}",
-                              doctorId: doctor.email, // You may want to use doctor.id here
+                              doctorId: doctor.email,
+                              imageFile: File(imagePath),
+                              imageResult: resultText,
                             ),
                           ),
                         );
@@ -220,4 +257,3 @@ class DoctorCard extends StatelessWidget {
     );
   }
 }
-

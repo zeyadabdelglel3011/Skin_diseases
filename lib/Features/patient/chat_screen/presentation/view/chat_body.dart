@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
+
 import '../../../../../constants.dart';
 import '../../data/chat_provider.dart';
 import '../../data/gemini_service.dart';
@@ -12,8 +13,16 @@ import '../view/widget/input_text.dart';
 class ChatBody extends StatefulWidget {
   final String userName;
   final String doctorId;
+  final File? imageFile;
+  final String? imageResult;
 
-  const ChatBody({super.key, required this.userName, required this.doctorId});
+  const ChatBody({
+    super.key,
+    required this.userName,
+    required this.doctorId,
+    this.imageFile,
+    this.imageResult,
+  });
 
   @override
   State<ChatBody> createState() => _ChatBodyState();
@@ -23,6 +32,29 @@ class _ChatBodyState extends State<ChatBody> {
   final TextEditingController _messageController = TextEditingController();
   final GeminiService _geminiService = GeminiService();
   final ImagePicker _picker = ImagePicker();
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Send initial image and result as a message
+    if (widget.imageFile != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        final provider = Provider.of<ChatProvider>(context, listen: false);
+        final time = TimeOfDay.now().format(context);
+
+        provider.addMessage(
+          widget.doctorId,
+          ChatMessage(
+            text: widget.imageResult ?? '',
+            isMe: true,
+            timestamp: time,
+            image: widget.imageFile,
+          ),
+        );
+      });
+    }
+  }
 
   Future<void> _sendMessage() async {
     final message = _messageController.text.trim();
@@ -47,7 +79,6 @@ class _ChatBodyState extends State<ChatBody> {
     try {
       final reply = await _geminiService.sendMessage(message);
 
-      // Add AI reply
       provider.addMessage(
         widget.doctorId,
         ChatMessage(
@@ -97,6 +128,7 @@ class _ChatBodyState extends State<ChatBody> {
       child: Column(
         children: [
           AppBarChat(userName: widget.userName),
+
           Expanded(
             child: ListView.builder(
               padding: const EdgeInsets.all(8),
@@ -112,6 +144,7 @@ class _ChatBodyState extends State<ChatBody> {
               },
             ),
           ),
+
           InputText(
             controller: _messageController,
             onSendPressed: _sendMessage,

@@ -38,8 +38,8 @@ class UploadPhotoRow extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
               child: Image.file(
                 selectedImage!,
-                width: 180,
-                height: 180,
+                width: 160,
+                height: 160,
                 fit: BoxFit.cover,
               ),
             ),

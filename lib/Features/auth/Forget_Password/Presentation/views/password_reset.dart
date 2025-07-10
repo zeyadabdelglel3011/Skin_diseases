@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../../../../../../constants.dart';
-import '../../../../Forget_Password/data/services/confirm_password_service.dart';
+
 import '../../../Login/presentation/views/login_screen.dart';
+import '../../data/services/confirm_password_service.dart';
 
 class PasswordReset extends StatefulWidget {
   final String uid;
